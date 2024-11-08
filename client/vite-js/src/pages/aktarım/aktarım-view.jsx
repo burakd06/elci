@@ -102,7 +102,7 @@ const handleChangeFavorite = useCallback((event) => {
             <Box
               component="img"
               alt="Ürün Görseli"
-              src="/assets/images/ürünler/efaturaarsiv.jpg"
+              src="/assets/images/ürünler/aktarım1.jpg"
               sx={{
                 width: '100%',
                 borderRadius: '12px',
@@ -212,26 +212,25 @@ const handleChangeFavorite = useCallback((event) => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Box
-            component="video"
-            src="/assets/images/ürünler/emustahsil.mp4"
-            autoPlay
-            loop
-            muted
-            sx={{
-              border: '2px solid black',
-              borderRadius: '11px',
-              width: '100%',
-              transform: animate ? 'translateX(0)' : 'translateX(50px)',
-              opacity: animate ? 1 : 0,
-              transition: 'all 0.8s ease-in-out',
-              ':hover': {
-                transform: 'scale(1.05)',
-                transition: 'transform 0.3s ease-in-out',
-              },
-            }}
-          />
-        </Grid>
+            <Box
+              component="img"
+              alt="Ürün Görseli"
+              src="/assets/images/ürünler/aktarım2.jpg"
+              sx={{
+                width: '100%',
+                borderRadius: '12px',
+                border: '2px solid #ddd',
+                // Soldan sağa animasyon
+                transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                opacity: animate ? 1 : 0,
+                transition: 'all 0.8s ease-in-out',
+                ':hover': {
+                  transform: 'scale(1.05)',
+                  transition: 'transform 0.3s ease-in-out',
+                },
+              }}
+            />
+          </Grid>
         </Grid>
 
     

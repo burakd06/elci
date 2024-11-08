@@ -6,7 +6,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import axios from 'axios';
 import TextEditor from 'src/components/texteditor/texteditor';
 import { getPageTexts } from 'src/api/comments/getComments';
-import ImageEdıtor from 'src/components/imageeditor/imageeditor';
+import ImageEditor from 'src/components/imageeditor/imageeditor';
 
 export function FaturaView() {
 const [imagesList, setImagesList] = useState([]);
@@ -46,19 +46,6 @@ const handleChangeFavorite = useCallback((event) => {
     }
   }, []);
   
-
-  useEffect(() => {
-    const fetchImages = async () => {
-        try {
-            const response = await axios.get('https://api.elcitr.com/api/images/:id');
-            setImagesList(response.data);
-        } catch (error) {
-            console.error('Resimler alınırken hata:', error);
-        }
-    };
-
-    fetchImages();
-}, []);
 
   const parseJwt = (token) => {
     if (!token) return null; 
@@ -112,7 +99,7 @@ const handleChangeFavorite = useCallback((event) => {
         {/* Üst Kısım: Resim ve Ürün Detayları */}
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
-            <Box
+            {/* <Box
               component="img"
               alt="Ürün Görseli"
               src="/assets/images/ürünler/efatura1.jpg"
@@ -128,13 +115,12 @@ const handleChangeFavorite = useCallback((event) => {
                   transition: 'transform 0.3s ease-in-out',
                 },
               }}
-            />
-            <ImageEdıtor 
-              isAdmin={decodedToken?.isAdmin} 
-              imgId={imagesList.find(b=>
-              b.id === "efatura1"
-             )?.url}
-              />
+            /> */}
+            <ImageEditor 
+            
+              imgIds={["efatura1",]}  // Burada birden fazla ID'yi geçiriyoruz
+             />
+
 
           </Grid>
           <Grid item xs={12} md={6}>
