@@ -13,7 +13,7 @@
   "description": "",
   "dependencies": {
     "@prisma/adapter-pg": "^5.20.0",
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "^5.22.0",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -30,6 +30,6 @@
     "sequelize": "^6.37.4"
   },
   "devDependencies": {
-    "prisma": "^5.20.0"
+    "prisma": "^5.22.0"
   }
 }

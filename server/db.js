@@ -5,6 +5,6 @@ const prisma = new PrismaClient();
 
 prisma.$connect()
     .then(() => console.log('Veritabanına başarıyla bağlanıldı.'))
-    .catch(error => console.error('Veritabanına bağlanırken hata:', error));
+    .catch(error => console.error('Veritabanına bağlanırken hata111:', error));
 
 export default prisma;

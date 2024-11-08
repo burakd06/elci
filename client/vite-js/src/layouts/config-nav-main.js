@@ -28,6 +28,8 @@ export const pageLinks = [
       { title: 'E-Saklama', path: paths.urunler.esaklama },
       { title: 'E-İmza', path: paths.urunler.eimza },
       { title: 'Kep', path: paths.urunler.kep },
+      { title: 'Beyan', path: paths.urunler.beyan},
+      { title: 'Aktarım', path: paths.urunler.aktarım},
     ],
   },
   {
@@ -50,40 +52,37 @@ export const pageLinks = [
 // Ürünler için görsel ve başlık bağlantıları
 export const pageLinks2 = [
   {
-    coverUrl: imagePath('efaturaarsiv.jpg'),
     items: [{ title: 'E-Müstahsil Makbuzu', path: paths.urunler.emustahsil }],
   },
   {
-    coverUrl: imagePath('efatura1.jpg'),
     items: [{ title: 'E-Fatura', path: paths.urunler.efatura }],
   },
   {
-    coverUrl: imagePath('efaturaarsiv2.jpeg'),
     items: [{ title: 'E-Arşiv Fatura', path: paths.urunler.earsivfatura }],
   },
   {
-    coverUrl: imagePath('eirsaliye.jpg'),
     items: [{ title: 'E-İrsaliye', path: paths.urunler.eirsaliye }],
   },
   {
-    coverUrl: imagePath('eserbestmeslek.jpg'),
     items: [{ title: 'E-Serbest Meslek Makbuzu', path: paths.urunler.eserbestmeslekmakbuzu }],
   },
   {
-    coverUrl: imagePath('edefter.jpg'),
     items: [{ title: 'E-Defter', path: paths.urunler.edefter }],
   },
   {
-    coverUrl: imagePath('esaklama.jpg'),
     items: [{ title: 'E-Saklama', path: paths.urunler.esaklama }],
   },
   {
-    coverUrl: imagePath('eimza.jpg'),
     items: [{ title: 'E-İmza', path: paths.urunler.eimza }],
   },
   {
-    coverUrl: imagePath('kep.jpg'),
     items: [{ title: 'Kep', path: paths.urunler.kep }],
+  },
+  {
+    items: [{ title: 'Beyan', path: paths.urunler.beyan }],
+  },
+  {
+    items: [{ title: 'Aktarım', path: paths.urunler.aktarım }],
   },
 ];
 
@@ -94,5 +93,5 @@ export const navData = [
   { title: 'Ürünlerimiz', path: paths.pages, children: pageLinks2 },
   { title: 'İletişim', path: '/company/contact' },
   { title: 'Blog', path: '/company/blog' },
-  { title: 'İnsan Kaynakları', path: '/company/İnsanKaynaklari' },
+  // { title: 'İnsan Kaynakları', path: '/company/İnsanKaynaklari' },
 ];

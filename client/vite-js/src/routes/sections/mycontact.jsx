@@ -19,7 +19,8 @@ const Eimza = lazy (() => import('src/pages/eimza/eimza'));
 const Kep = lazy (() => import('src/pages/kep/kep'));
 const Basvuruform = lazy (() => import('src/pages/insankaynakları/insankaynakları'));
 const Blog = lazy (() => import('src/pages/blog/blog'));
-
+const Beyan = lazy (() => import('src/pages/beyan/beyan'));
+const Aktarım = lazy (() => import('src/pages/aktarım/aktarım'));
 
 
 
@@ -51,7 +52,8 @@ export const companyRoutes = [
       {path: 'kep', element: <Kep/>},
       {path: 'İnsanKaynaklari', element: <Basvuruform/>},
       {path: 'blog', element: <Blog/>},
-      
+      {path: 'beyan', element: <Beyan/>},
+      {path: 'aktarım', element: <Aktarım/>},
       
       
     ],

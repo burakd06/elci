@@ -50,7 +50,7 @@ const handleChangeFavorite = useCallback((event) => {
   useEffect(() => {
     const fetchImages = async () => {
         try {
-            const response = await axios.get('http://localhost:3002/api/images/:id');
+            const response = await axios.get('https://api.elcitr.com/api/images/:id');
             setImagesList(response.data);
         } catch (error) {
             console.error('Resimler alınırken hata:', error);

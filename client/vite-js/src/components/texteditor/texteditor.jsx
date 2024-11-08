@@ -26,7 +26,7 @@ const TextEditor = ({ isAdmin, initialText, textId, elementType, variant, css, t
 
     if (result.isConfirmed) {
       try {
-        const response = await axios.put(`http://localhost:3002/api/texts/${textId}`, {
+        const response = await axios.put(`https://api.elcitr.com/api/texts/${textId}`, {
           text,
         });
 

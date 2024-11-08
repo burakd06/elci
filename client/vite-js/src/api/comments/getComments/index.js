@@ -12,4 +12,4 @@ import axios from 'axios';
  */
 
 export const getPageTexts = async (page) => 
-  axios.get(`http://localhost:3002/api/texts?page=${page}`);
+  axios.get(`https://api.elcitr.com/api/texts?page=${page}`);

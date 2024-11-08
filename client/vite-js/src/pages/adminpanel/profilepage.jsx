@@ -11,7 +11,7 @@ export function ProfilePage() {
     const fetchProfileData = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.get('http://localhost:3002/auth/profile', {
+        const response = await axios.get('https://api.elcitr.com/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProfileData(response.data);

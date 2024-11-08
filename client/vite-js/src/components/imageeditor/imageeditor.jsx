@@ -9,7 +9,7 @@ const ImageEditor = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await axios.get('http://localhost:3002/api/images/'); // API'den resimleri çek
+                const response = await axios.get('https://api.elcitr.com/api/images/'); // API'den resimleri çek
                 setImages(response.data); // API'den gelen verileri state'e kaydet
             } catch (error) {
                 console.error('Resimler alınırken hata:', error);

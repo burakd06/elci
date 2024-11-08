@@ -43,11 +43,15 @@ export const createComment = async (req, res) => {
 };
 
 export const approveCommentById = async (req, res) => {
-    const { id } = req.params;
+    const id = parseInt(req.params.id, 10); // id'yi Int'e çeviriyoruz
     const isAdmin = req.user?.isAdmin;
 
     if (!isAdmin) {
         return res.status(403).json({ message: 'Yalnızca adminler onaylayabilir.' });
+    }
+
+    if (isNaN(id)) {
+        return res.status(400).json({ message: 'Geçersiz ID değeri.' });
     }
 
     try {
@@ -58,3 +62,4 @@ export const approveCommentById = async (req, res) => {
         res.status(500).json({ message: 'Yorum onaylanırken bir hata oluştu.' });
     }
 };
+

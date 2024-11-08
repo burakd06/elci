@@ -31,7 +31,7 @@ const onSubmit = handleSubmit(async (data) => {
     console.log('veriler ->', data);
     try {
       // Backend'e veri gönderme
-      const response = await axios.post('http://localhost:3002/sendform/send', {
+      const response = await axios.post('https://api.elcitr.com/sendform/send', {
         name: data.isim,
         subject: data.subject,
         email: data.email,

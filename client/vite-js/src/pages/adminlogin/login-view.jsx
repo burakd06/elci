@@ -29,7 +29,7 @@ export function LoginView() {
     setLoading(true); 
 
     try {
-        const response = await axios.post('http://localhost:3002/auth/login', {
+        const response = await axios.post('https://api.elcitr.com/auth/login', {
           username,
           password,
         });
@@ -56,7 +56,7 @@ export function LoginView() {
     }
   
     try {
-      const response = await axios.get('http://localhost:3002/protected-route', {
+      const response = await axios.get('https://api.elcitr.com/protected-route', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
