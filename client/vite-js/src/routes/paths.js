@@ -13,7 +13,8 @@ export const paths = {
     kep: '/company/kep',
     hakkımızda: '/company/about',
     beyan: '/company/beyan',
-    aktarım: '/company/aktarım',
+    aktarim: '/company/aktarım',
+    pusula: '/company/pusula'
   },
   // Diğer bölümler
   hakkımızda : {

@@ -7,7 +7,7 @@ import { BeyanView } from 'src/pages/beyan/beyan-view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `E- Müstahsil ${CONFIG.appName}` };
+const metadata = { title: `Beyan ${CONFIG.appName}` };
 
 export default function Page() {
    

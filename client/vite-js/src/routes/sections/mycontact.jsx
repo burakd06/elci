@@ -21,6 +21,8 @@ const Basvuruform = lazy (() => import('src/pages/insankaynakları/insankaynakla
 const Blog = lazy (() => import('src/pages/blog/blog'));
 const Beyan = lazy (() => import('src/pages/beyan/beyan'));
 const Aktarım = lazy (() => import('src/pages/aktarım/aktarım'));
+const Pusula = lazy(() => import('src/pages/egiderpusulası/egiderpusulası'))
+
 
 
 
@@ -54,6 +56,7 @@ export const companyRoutes = [
       {path: 'blog', element: <Blog/>},
       {path: 'beyan', element: <Beyan/>},
       {path: 'aktarım', element: <Aktarım/>},
+      {path: 'pusula', element: <Pusula/>},
       
       
     ],

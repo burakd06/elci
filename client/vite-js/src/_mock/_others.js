@@ -18,10 +18,10 @@ export const _testimonials = [...Array(8)].map((_, index) => ({
 // ----------------------------------------------------------------------
 
 export const _socials = [
-  { value: 'facebook', label: 'Facebook',href:'https://www.facebook.com/etrsoft/' },
-  { value: 'instagram', label: 'Instagram',href:'https://www.instagram.com/etrsoft/', },
-  // { value: 'linkedin', label: 'Linkedin' ,href:'https://x.com/etrsoft'},
-  { value: 'twitter', label: 'Twitter',href:'https://x.com/etrsoft'},
+  { value: 'facebook', label: 'Facebook' },
+  { value: 'instagram', label: 'Instagram'},
+  { value: 'linkedin', label: 'Linkedin'},
+  { value: 'twitter', label: 'Twitter'},
 ];
 
 // ----------------------------------------------------------------------

@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/config-global';
 
-import { AktarımView } from 'src/pages/aktarım/aktarım-view';
+import { PusulaView } from 'src/pages/egiderpusulası/egiderpusulası-view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: ` Aktarım ${CONFIG.appName}` };
+const metadata = { title: `E-imza ${CONFIG.appName}` };
 
 export default function Page() {
    
@@ -17,7 +17,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <AktarımView />
+      <PusulaView />
     </>
   );
 }
