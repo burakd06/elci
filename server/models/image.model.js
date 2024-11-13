@@ -1,8 +1,12 @@
 import prisma from '../db.js';
 
-export async function fetchAllImagesModel() {
+export async function fetchAllImagesModel(page) {
     try {
-        const images = await prisma.images.findMany(); // images tablosundan tüm resimleri al
+        const images = await prisma.images.findMany({
+            where: {
+                path: { contains: page }
+            }
+        });
         return images;
     } catch (error) {
         console.error('Veri alma hatası:', error);
@@ -17,43 +21,27 @@ export async function fetchImageByIdModel(id) {
                 id: id,
             },
         });
-        return image; // null dönerse hata fırlatmaya gerek yok
+        return image;
     } catch (error) {
         console.error('Veri alma hatası:', error);
         throw new Error('Veri alınırken hata oluştu.');
     }
 }
 
-export async function saveImageModel(imageUrl) {
+export async function saveImageModel(imageData) {
     try {
-        const newImage = await prisma.images.create({
+        // 'imageData' parametresi resmin verilerini içeriyor olmalı
+        const newImage = await prisma.images.update({
             data: {
-                url: imageUrl, // Resim URL'sini kaydet
-            },
+                // Resmin URL'ini veya base64 verisini burada geçin
+                url: imageData.url,  // Örnek: imageData.base64 veya imageData.url
+                // Diğer gerekli alanları da buraya ekleyebilirsiniz
+            }
         });
-        return newImage; // Yeni resmi döndür
+        return newImage;
     } catch (error) {
-        console.error('Resim kaydetme hatası:', error);
+        console.error("Resim kaydedilirken hata oluştu:", error);
         throw new Error('Resim kaydedilirken hata oluştu.');
     }
 }
 
-// images tablosunu oluştur
-const createImagesTable = async () => {
-    const createTableQuery = `
-        CREATE TABLE IF NOT EXISTS images (
-            id TEXT PRIMARY KEY,
-            url TEXT NOT NULL
-        );
-    `;
-
-    try {
-        await prisma.$executeRawUnsafe(createTableQuery);
-        console.log('images tablosu başarıyla oluşturuldu.');
-    } catch (error) {
-        console.error('Images tablosu oluşturulurken hata:', error);
-    }
-};
-
-// Uygulama başladığında tabloyu oluştur
-createImagesTable();

@@ -8,9 +8,10 @@ import { CONFIG } from 'src/config-global';
 import { varAlpha, bgGradient, textGradient } from 'src/theme/styles';
 import { varFade, MotionViewport } from 'src/components/animate';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import TextEditor from 'src/components/texteditor/texteditor';
 import {getPageTexts} from 'src/api/comments/getComments'
+import ImageEditor from 'src/components/imageeditor/imageeditor';
+import { getImages } from 'src/api/comments/getComments';
 
 function AnimatedDiv({ children }) {
   const variants = varFade({ distance: 24 }).inUp;
@@ -18,7 +19,7 @@ function AnimatedDiv({ children }) {
 }
 
 export function HomeGiris({ sx, ...other }) {
-  
+  const [imagesList, setImagesList] = useState([]);
   const [decodedToken, setDecodedToken] = useState(null)
  useEffect(() => {
   const token = localStorage.getItem('token'); // Token'ı local storage'dan al
@@ -44,6 +45,19 @@ useEffect(() => {
   };
 
   fetchTextData(); 
+}, []);
+
+useEffect(() => {
+  const fetchImageData = async () => {
+    try {
+      const imgresponse = await getImages("/");
+      console.log("Gelen resimler", imgresponse.data);
+      setImagesList(imgresponse.data)
+    } catch (error) {
+      console.error('resim alma hatası:', error);
+    }
+  };
+  fetchImageData();
 }, []);
 const parseJwt = (token) => {
   if (!token) return null; 
@@ -155,6 +169,7 @@ const parseJwt = (token) => {
             borderRadius: 10,
           }}
         />
+        
       ))}
     </Box>
   );

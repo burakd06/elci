@@ -139,7 +139,7 @@ export function Homeİcons({ sx, ...other }) {
                     d.element === "Feature" &&
                     d.id === feature.id &&
                     d.path === "/"
-                  )?.text || feature.label} {/* Dinamik metin veya varsayılan label */}
+                  )?.text || feature.label} 
                 </Box>
                 <TextEditor
             variant="h2" css={{ my: 3 }}

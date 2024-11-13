@@ -1,67 +1,155 @@
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
-const ImageEditor = ({ imgIds }) => {  // imgIds birden fazla ID alacak
-    const [images, setImages] = useState([]);
-    const [error, setError] = useState(null);
-    const [animate, setAnimate] = useState(false);
+const ImageEditor = ({ initialImage, imagesList, setImagesList, css, isAdmin }) => {
+  const [image, setImage] = useState(initialImage); 
+  const [error, setError] = useState(null);
+  const [file, setFile] = useState(null); 
+  const [imagePreview, setImagePreview] = useState(null); 
 
-    useEffect(() => {
-        const fetchImages = async () => {
-            try {
-                // Tüm resimleri almak için genel endpoint'e istek atıyoruz
-                const response = await axios.get('https://api.elcitr.com/api/images/');
-                const allImages = response.data; // Tüm resimler
+  useEffect(() => {
+    if (imagesList.length > 0) {
+      const selectedImage = imagesList.find(
+        (img) => img.id === initialImage.id && img.path === initialImage.path
+      );
 
-                // imgIds içindeki her ID'yi filtreleyerek resimleri alıyoruz
-                const filteredImages = allImages.filter(img => imgIds.includes(img.id)); 
+      if (selectedImage) {
+        setImage(selectedImage.url);
+      } else {
+        setError('Resim bulunamadı');
+      }
+    }
+  }, [initialImage, imagesList]);
 
-                if (filteredImages.length > 0) {
-                    setImages(filteredImages); // Bulunan resimleri state'e kaydediyoruz
-                } else {
-                    setError('Hiçbir resim bulunamadı.');
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result); 
+        setFile(selectedFile); 
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const handleUpdate = async () => {
+    if (!file) {
+        return Swal.fire({
+            title: 'Hata!',
+            text: 'Lütfen bir dosya seçin!',
+            icon: 'error',
+            confirmButtonText: 'Tamam',
+        });
+    }
+
+    // Dosya boyutunu kontrol et
+    if (file.size > 50 * 1024 * 1024) { // 50MB
+        return Swal.fire({
+            title: 'Hata!',
+            text: 'Dosya boyutu çok büyük! Lütfen 50MB veya daha küçük bir dosya seçin.',
+            icon: 'error',
+            confirmButtonText: 'Tamam',
+        });
+    }
+
+    const result = await Swal.fire({
+        title: 'Resmi güncellemek istediğinize emin misiniz?',
+        showCancelButton: true,
+        confirmButtonText: 'Evet',
+        cancelButtonText: 'Hayır',
+        focusCancel: true,
+    });
+
+    if (result.isConfirmed) {
+        try {
+            const formData = new FormData();
+            formData.append('file', file); 
+
+            const response = await axios.post(
+                `https://api.elcitr.com/api/images/`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
                 }
+            );
 
-            } catch (error) {
-                console.error('Resimler alınırken hata:', error.response || error.message);
-                setError('Resimler alınırken hata oluştu.');
+            console.log('Güncelleme yanıtı:', response.data);
+
+            const updatedIndex = imagesList.findIndex((img) => img.id === initialImage.id);
+            if (updatedIndex !== -1) {
+                const updatedList = [...imagesList];
+                updatedList[updatedIndex].url = imagePreview; 
+                setImagesList(updatedList);
             }
-        };
 
-        fetchImages(); // Resimleri çek
-    }, [imgIds]); // imgIds değiştiğinde tekrar çalışacak
+            await Swal.fire({
+                title: 'Başarılı!',
+                text: 'Resim güncellendi!',
+                icon: 'success',
+                confirmButtonText: 'Tamam',
+            });
+        } catch (error) {
+            console.error('Güncelleme hatası:', error);
 
-    return (
+            await Swal.fire({
+                title: 'Hata!',
+                text: 'Güncelleme sırasında bir hata oluştu.',
+                icon: 'error',
+                confirmButtonText: 'Tamam',
+            });
+        }
+    } else {
+        Swal.fire('Güncelleme iptal edildi.');
+    }
+};
+
+
+  return (
+    <div>
+      {error && <Typography color="error">{error}</Typography>}
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {image && (
+          <Box
+            key={image}
+            component="img"
+            src={`data:image/png;base64,${image}`}
+            sx={{ ...css }}
+          />
+        )}
+      </div>
+
+      {isAdmin && (
         <div>
-            {error && <Typography color="error">{error}</Typography>} {/* Hata mesajı göster */}
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {images.map((image) => (
-                    <Box
-                        key={image.url}
-                        component="img"
-                        alt={`Resim ${image.url}`}
-                        src={`data:image/png;base64,${image.url}`} // Base64 kodlu resmi gösteriyoruz
-                        sx={{
-                            width: '100%',
-                            borderRadius: '12px',
-                            border: '2px solid #ddd',
-                            margin: '10px',
-                            mb: 4,
-                            transition: 'all 0.8s ease-in-out',
-                            opacity: animate ? 0 : 1,
-                            transform: animate ? 'translateX(0)' : 'translateX(-100px)',
-                            ':hover': {
-                                transform: 'scale(1.05)',
-                                transition: 'transform 0.3s ease-in-out',
-                            },
-                        }}
-                    />
-                ))}
-            </div>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept="image/*"
+            style={{ marginBottom: '10px' }}
+          />
         </div>
-    );
+      )}
+
+      {imagePreview && (
+        <div>
+          <Typography variant="h6">Seçilen Resim:</Typography>
+          <Box component="img" src={imagePreview} sx={{ width: 200, height: 200, marginBottom: 2 }} />
+        </div>
+      )}
+
+      {isAdmin && (
+        <Button variant="contained" color="primary" onClick={handleUpdate} sx={{ mt: 2 }}>
+          Güncelle
+        </Button>
+      )}
+    </div>
+  );
 };
 
 export default ImageEditor;

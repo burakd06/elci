@@ -51,6 +51,7 @@ model texts {
 model images {
   id    String @id
   url   String
+  path String?
 }
 
 

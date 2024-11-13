@@ -3,10 +3,11 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-import axios from 'axios';
 import TextEditor from 'src/components/texteditor/texteditor';
 import { getPageTexts } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
+import { getImages } from 'src/api/comments/getComments';
+
 
 export function FaturaView() {
 const [imagesList, setImagesList] = useState([]);
@@ -23,16 +24,31 @@ const handleChangeFavorite = useCallback((event) => {
   useEffect(() => {
     const fetchTextData = async () => {
       try {
-        const response = await getPageTexts("e-fatura")
-        console.log("Alınan veri:", response.data);
+        const response = await getPageTexts("e-fatura");
+        console.log("Gelen metinler",);
         setTextDataList(response.data); 
       } catch (error) {
-        console.error('Veri alma hatası:', error);
+        console.error('Veri alma hatası:', error);  
       }
     };
-
     fetchTextData(); 
   }, []);
+  
+  useEffect(() => {
+    const fetchImageData = async () => {
+      try {
+        const imgresponse = await getImages("e-fatura");
+        console.log("Gelen resimler", imgresponse.data);
+        setImagesList(imgresponse.data)
+      } catch (error) {
+        console.error('resim alma hatası:', error);
+      }
+    };
+    fetchImageData();
+  }, []);
+  
+
+
 
   const [decodedToken, setDecodedToken] = useState(null)
    useEffect(() => {
@@ -98,29 +114,27 @@ const handleChangeFavorite = useCallback((event) => {
 
         {/* Üst Kısım: Resim ve Ürün Detayları */}
         <Grid container spacing={4} justifyContent="center">
-          <Grid item xs={12} md={6}>
-            {/* <Box
-              component="img"
-              alt="Ürün Görseli"
-              src="/assets/images/ürünler/efatura1.jpg"
-              sx={{
-                width: '100%',
-                borderRadius: '12px',
-                border: '2px solid #ddd',
-                transform: animate ? 'translateX(0)' : 'translateX(-100px)',
-                opacity: animate ? 1 : 0,
-                transition: 'all 0.8s ease-in-out',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.3s ease-in-out',
-                },
-              }}
-            /> */}
-            <ImageEditor 
-            
-              imgIds={["efatura1",]}  // Burada birden fazla ID'yi geçiriyoruz
-             />
-
+          <Grid item xs={12} md={6}>         
+            <ImageEditor
+                  initialImage={{
+                    id: "efatura1", 
+                    path: "/company/e-fatura", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    transition: 'all 0.8s ease-in-out',
+                    ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  }}
+                />
 
           </Grid>
           <Grid item xs={12} md={6}>
@@ -217,25 +231,26 @@ const handleChangeFavorite = useCallback((event) => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Box
-              component="video"
-              src="/assets/images/ürünler/efatura.mp4"
-              autoPlay
-              loop
-              muted
-              sx={{
-                border: '2px solid black',
-                borderRadius: '11px',
-                width: '100%',
-                transform: animate ? 'translateX(0)' : 'translateX(50px)',
-                opacity: animate ? 1 : 0,
-                transition: 'all 0.8s ease-in-out',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.3s ease-in-out',
-                },
-              }}
-            />
+            <ImageEditor
+                  initialImage={{
+                    id: "efatura2", 
+                    path: "/company/e-fatura", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    transition: 'all 0.8s ease-in-out',
+                    ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  }}
+                />
           </Grid>
         </Grid>
         <TextEditor 

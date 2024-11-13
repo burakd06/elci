@@ -6,8 +6,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { usePopover } from 'src/hooks/use-popover';
 import TextEditor from 'src/components/texteditor/texteditor';
 import { getPageTexts } from 'src/api/comments/getComments';
+import ImageEditor from 'src/components/imageeditor/imageeditor';
+import { getImages } from 'src/api/comments/getComments';
 
 export function EsaklamaView() {
+  const [imagesList, setImagesList] = useState([]);
   const [textDataList,setTextDataList] = useState([]);
   const openSocial = usePopover();
   const [animate, setAnimate] = useState(false);
@@ -45,6 +48,19 @@ export function EsaklamaView() {
   };
 
   fetchTextData(); 
+}, []);
+
+useEffect(() => {
+  const fetchImageData = async () => {
+    try {
+      const imgresponse = await getImages("esaklama");
+      console.log("Gelen resimler", imgresponse.data);
+      setImagesList(imgresponse.data)
+    } catch (error) {
+      console.error('resim alma hatası:', error);
+    }
+  };
+  fetchImageData();
 }, []);
 
  const parseJwt = (token) => {
@@ -95,24 +111,14 @@ export function EsaklamaView() {
 
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
-            <Box
-              component="img"
-              alt="Ürün Görseli"
-              src="/assets/images/ürünler/esaklama.jpg"
-              sx={{
-                width: '100%',
-                borderRadius: '12px',
-                border: '2px solid #ddd',
-                // Soldan sağa animasyon
-                transform: animate ? 'translateX(0)' : 'translateX(-100px)',
-                opacity: animate ? 1 : 0,
-                transition: 'all 0.8s ease-in-out',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.3s ease-in-out',
-                },
-              }}
-            />
+          <ImageEditor
+                  initialImage={{
+                    id: "esaklama1", 
+                    path: "/company/esaklama", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                />
           </Grid>
 
    
@@ -206,24 +212,26 @@ export function EsaklamaView() {
         </Grid>
 
         <Grid item xs={12} md={6}>
-        <Box
-              component="img"
-              alt="Ürün Görseli"
-              src="/assets/images/ürünler/esaklama2.jpg"
-              sx={{
-                width: '100%',
-                borderRadius: '12px',
-                border: '2px solid #ddd',
-                // Soldan sağa animasyon
-                transform: animate ? 'translateX(0)' : 'translateX(-100px)',
-                opacity: animate ? 1 : 0,
-                transition: 'all 0.8s ease-in-out',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.3s ease-in-out',
-                },
-              }}
-            />
+        <ImageEditor
+                  initialImage={{
+                    id: "esaklama2", 
+                    path: "/company/esaklama", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    transition: 'all 0.8s ease-in-out',
+                    ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  }}
+                />
             </Grid>
         </Grid>
         <TextEditor 

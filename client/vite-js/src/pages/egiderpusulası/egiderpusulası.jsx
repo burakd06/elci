@@ -7,7 +7,7 @@ import { PusulaView } from 'src/pages/egiderpusulası/egiderpusulası-view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `E-imza ${CONFIG.appName}` };
+const metadata = { title: `E-Gider Pusulası ${CONFIG.appName}` };
 
 export default function Page() {
    

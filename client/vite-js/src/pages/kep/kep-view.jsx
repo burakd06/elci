@@ -5,11 +5,13 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import TextEditor from 'src/components/texteditor/texteditor';
 import { getPageTexts } from 'src/api/comments/getComments';
-
+import ImageEditor from 'src/components/imageeditor/imageeditor';
+import { getImages } from 'src/api/comments/getComments';
 
 
 
 export function KepView() {
+  const [imagesList, setImagesList] = useState([]);
   const [textDataList, setTextDataList] = useState([]);
   const [animate, setAnimate] = useState(false);
   const [decodedToken, setDecodedToken] = useState(null);
@@ -37,6 +39,19 @@ export function KepView() {
     };
 
     fetchTextData(); 
+  }, []);
+
+  useEffect(() => {
+    const fetchImageData = async () => {
+      try {
+        const imgresponse = await getImages("kep");
+        console.log("Gelen resimler", imgresponse.data);
+        setImagesList(imgresponse.data)
+      } catch (error) {
+        console.error('resim alma hatası:', error);
+      }
+    };
+    fetchImageData();
   }, []);
 
   useEffect(() => {
@@ -92,23 +107,26 @@ export function KepView() {
 
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
-            <Box
-              component="img"
-              alt="Ürün Görseli"
-              src="/assets/images/ürünler/kep.jpg"
-              sx={{
-                width: '100%',
-                borderRadius: '12px',
-                border: '2px solid #ddd',
-                transform: animate ? 'translateX(0)' : 'translateX(-100px)',
-                opacity: animate ? 1 : 0,
-                transition: 'all 0.8s ease-in-out',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.3s ease-in-out',
-                },
-              }}
-            />
+          <ImageEditor
+                  initialImage={{
+                    id: "kep1", 
+                    path: "/company/kep", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    transition: 'all 0.8s ease-in-out',
+                    ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  }}
+                />
           </Grid>
 
           <Grid item xs={12} md={6}>

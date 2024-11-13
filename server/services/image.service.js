@@ -1,8 +1,8 @@
 import { fetchAllImagesModel, fetchImageByIdModel, saveImageModel } from '../models/image.model.js';
 
-export async function fetchAllImages() {
+export async function fetchAllImages(page) {
     try {
-        const images = await fetchAllImagesModel();
+        const images = await fetchAllImagesModel(page);
         return images;
     } catch (error) {
         console.error('Resimler alınırken hata:', error);
@@ -20,10 +20,10 @@ export async function fetchImageById(id) {
     }
 }
 
-export async function saveImage(imageUrl) {
+export async function saveImage(id, imageUrl) {
     try {
-        const newImage = await saveImageModel(imageUrl);
-        return newImage;
+        const updatedImage = await saveImageModel(id, imageUrl);
+        return updatedImage;
     } catch (error) {
         console.error('Resim kaydedilirken hata:', error);
         throw new Error('Resim kaydedilirken hata oluştu.');

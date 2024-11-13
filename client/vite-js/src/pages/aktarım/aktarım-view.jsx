@@ -6,10 +6,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { usePopover } from 'src/hooks/use-popover';
 import TextEditor from 'src/components/texteditor/texteditor';
 import { getPageTexts } from 'src/api/comments/getComments';
+import ImageEditor from 'src/components/imageeditor/imageeditor';
+import { getImages } from 'src/api/comments/getComments';
 
 
 
 export function AktarımView() {
+const [imagesList, setImagesList] = useState([]);
 const [textDataList, setTextDataList] = useState([]);
 const openSocial = usePopover();
 const [animate, setAnimate] = useState(false);
@@ -50,6 +53,20 @@ const handleChangeFavorite = useCallback((event) => {
 
   fetchTextData(); 
 }, []);
+
+useEffect(() => {
+  const fetchImageData = async () => {
+    try {
+      const imgresponse = await getImages("aktarım");
+      console.log("Gelen resimler", imgresponse.data);
+      setImagesList(imgresponse.data)
+    } catch (error) {
+      console.error('resim alma hatası:', error);
+    }
+  };
+  fetchImageData();
+}, []);
+
  const parseJwt = (token) => {
    if (!token) return null; 
    const base64Url = token.split('.')[1];
@@ -99,24 +116,28 @@ const handleChangeFavorite = useCallback((event) => {
 
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
-            <Box
-              component="img"
-              alt="Ürün Görseli"
-              src="/assets/images/ürünler/aktarım1.jpg"
-              sx={{
-                width: '100%',
-                borderRadius: '12px',
-                border: '2px solid #ddd',
-                // Soldan sağa animasyon
-                transform: animate ? 'translateX(0)' : 'translateX(-100px)',
-                opacity: animate ? 1 : 0,
-                transition: 'all 0.8s ease-in-out',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.3s ease-in-out',
-                },
-              }}
-            />
+            <ImageEditor
+            isAdmin={decodedToken?.isAdmin}
+                  initialImage={{
+                    id: "aktarım1", 
+                    path: "/company/aktarım", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    transition: 'all 0.8s ease-in-out',
+                    ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  }}
+
+                />
           </Grid>
 
           <Grid item xs={12} md={6}>
@@ -212,24 +233,26 @@ const handleChangeFavorite = useCallback((event) => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-            <Box
-              component="img"
-              alt="Ürün Görseli"
-              src="/assets/images/ürünler/aktarım2.jpg"
-              sx={{
-                width: '100%',
-                borderRadius: '12px',
-                border: '2px solid #ddd',
-                // Soldan sağa animasyon
-                transform: animate ? 'translateX(0)' : 'translateX(-100px)',
-                opacity: animate ? 1 : 0,
-                transition: 'all 0.8s ease-in-out',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.3s ease-in-out',
-                },
-              }}
-            />
+        <ImageEditor
+                  initialImage={{
+                    id: "aktarım2", 
+                    path: "/company/aktarım", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    transition: 'all 0.8s ease-in-out',
+                    ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  }}
+                />
           </Grid>
         </Grid>
 

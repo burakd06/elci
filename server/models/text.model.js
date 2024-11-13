@@ -59,7 +59,7 @@ const createTextsTable = async () => {
     `;
 
     try {
-        await prisma.$executeRawUnsafe(createTableQuery);
+        await prisma.$executeRaw(createTableQuery);
         console.log('texts tablosu başarıyla oluşturuldu.');
     } catch (error) {
         console.error('Text tablosu oluşturulurken hata:', error);

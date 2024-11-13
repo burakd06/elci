@@ -12,7 +12,7 @@ const TextEditor = ({ isAdmin, initialText, textId, elementType, variant, css, t
   const [text, setText] = useState(initialText);
 
   useEffect(() => {
-    setText(initialText); // initialText değiştiğinde durumu güncelle
+    setText(initialText); 
   }, [initialText]);
 
   const handleUpdate = async () => {
