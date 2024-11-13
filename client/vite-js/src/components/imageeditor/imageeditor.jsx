@@ -71,7 +71,7 @@ const ImageEditor = ({ initialImage, imagesList, setImagesList, css, isAdmin }) 
             formData.append('file', file); 
 
             const response = await axios.post(
-                `https://api.elcitr.com/api/images/`,
+                `https://api.elcitr.com/api/images/upload`,
                 formData,
                 {
                     headers: {

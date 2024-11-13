@@ -1,14 +1,9 @@
-import multer from 'multer';
-import path from 'path';
 import { fetchAllImages, fetchImageById, saveImage } from '../services/image.service.js';
 
-const upload = multer({
-    dest: 'uploads/', 
-});
 
 export const getImages = async (req, res) => {
     try {
-        const page = req.query.page || 1;
+        const page = req.query.page
         const images = await fetchAllImages(page);
         res.json(images);
     } catch (error) {
@@ -31,9 +26,7 @@ export const getImageById = async (req, res) => {
     }
 };
 
-export const uploadImage = upload.single('file'); // Tek dosya yüklemesi için multer kullanımı
-
-export const saveImage = async (req, res) => {
+export const uploadImage = async (req, res) => {
     const { id } = req.params;
     const file = req.file; // Dosya objesi
 
@@ -42,7 +35,7 @@ export const saveImage = async (req, res) => {
     }
 
     try {
-        const imageUrl = path.join('/uploads', file.filename); // Yüklenen dosyanın URL'si
+
         const updatedImage = await saveImageModel(id, imageUrl); // Resmi güncelle
 
         res.status(200).json(updatedImage);

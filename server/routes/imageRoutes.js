@@ -6,6 +6,6 @@ const router = express.Router();
 // /api/images endpoint'ine GET ve POST istekleri
 router.get('/images', getImages);
 router.get('/images/:id', getImageById);
-router.post('/images', uploadImage);
+router.post('/images/upload', uploadImage);
 
 export default router;

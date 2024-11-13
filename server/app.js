@@ -19,7 +19,7 @@ app.use('/auth', userRoutes);
 app.use('/api', textRoutes);
 app.use('/api', imageRoutes)
 
-
+app.use(cors({ origin: 'https://elcitr.com' }));
 
 app.listen(port, () => {
     console.log(`Backend ${port} portunda çalışıyor.`);
