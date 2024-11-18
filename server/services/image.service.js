@@ -1,10 +1,8 @@
-import { fetchAllImagesModel, fetchImageByIdModel, saveImageModel } from 
-'../models/image.model.js';
+import { fetchAllImagesModel, fetchImageByIdModel, saveImageModel } from '../models/image.model.js';
 
-export async function fetchAllImages(page) {
+export async function fetchAllImages() {
     try {
-        const images = await fetchAllImagesModel(page);
-        return images;
+        return await fetchAllImagesModel();
     } catch (error) {
         console.error('Resimler alınırken hata:', error);
         throw new Error('Resimler alınırken hata oluştu.');
@@ -13,8 +11,7 @@ export async function fetchAllImages(page) {
 
 export async function fetchImageById(id) {
     try {
-        const image = await fetchImageByIdModel(id);
-        return image;
+        return await fetchImageByIdModel(id);
     } catch (error) {
         console.error('Resim alınırken hata:', error);
         throw new Error('Resim alınırken hata oluştu.');
@@ -23,21 +20,9 @@ export async function fetchImageById(id) {
 
 export async function saveImageService(imageData) {
     try {
-        console.log("Güncelleme öncesi id:", imageData.id);  // id'yi logla
-        console.log("Güncelleme yapılacak url:", imageData.url);  // URL'yi logla
-
-        // Veritabanı güncellemesi
-        const updatedImage = await saveImageModel(imageData);  // Burada direkt olarak model fonksiyonunu çağırıyoruz
-
-        console.log("Güncellenmiş Resim:", updatedImage); // Güncellenen resmi logla
-        return updatedImage; // Güncellenen resmi döndür
+        return await saveImageModel(imageData);
     } catch (error) {
-        console.error("Resim kaydedilirken hata oluştu:", error);  // Hata logu
+        console.error('Resim kaydedilirken hata:', error);
         throw new Error('Resim kaydedilirken hata oluştu.');
     }
 }
-
-
-
-
-

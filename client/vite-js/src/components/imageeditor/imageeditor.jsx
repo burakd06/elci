@@ -37,30 +37,34 @@ const ImageEditor = ({ initialImage, imagesList, setImagesList, css, isAdmin }) 
     }
   }, [initialImage, imagesList]);
 
-  const handleFileChange = (event) => {
+const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      if (selectedFile.size > maxSize) {
-        console.warn('Image is too large to store in sessionStorage');
-        return Swal.fire({
-          title: 'Hata!',
-          text: 'Dosya boyutu çok büyük!',
-          icon: 'error',
-          confirmButtonText: 'Tamam',
+    if (!selectedFile) return;
+
+    // FormData oluşturuluyor
+    const formData = new FormData();
+    formData.append('image', selectedFile); // Buradaki 'image' formda kullanacağınız alan adı olmalı
+
+    try {
+        // Dosya yükleme isteği
+        const response = await axios.post('https://api.elcitr.com/api/images/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Axios bunu otomatik ayarlamalı, ancak ihtimale karşı buraya da ekleyebilirsiniz
+            },
         });
-      }
-  
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-        setFile(selectedFile);
-      };
-      reader.readAsDataURL(selectedFile);
+        console.log('Dosya yüklendi:', response.data);
+    } catch (error) {
+        console.error('Dosya yükleme hatası:', error);
+        Swal.fire({
+            title: 'Hata!',
+            text: `Dosya yükleme hatası: ${error.response ? error.response.data : error.message}`,
+            icon: 'error',
+            confirmButtonText: 'Tamam',
+        });
     }
-  
-    // Her durumda bir değer döndürülmeli
-    return null;
-  };
+};
+
+
   
   
 
@@ -74,53 +78,45 @@ const ImageEditor = ({ initialImage, imagesList, setImagesList, css, isAdmin }) 
         });
     }
 
-    // Dosyayı base64 formatına dönüştür
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-        const base64Image = reader.result.split(',')[1]; // Base64 kodunu ayıklayın (başındaki veri türünü çıkar)
+    // Base64 verisini form-data'ya ekle
+    const formData = new FormData();
+    formData.append('id', initialImage.id);
+    formData.append('base64Image', imagePreview); // Base64 verisi
 
-        try {
-            // Base64 verisini gönder
-            const response = await axios.post(
-                `https://api.elcitr.com/api/images/upload`,
-                {
-                    id: initialImage.id, // Güncellenmek istenen resmin ID'si
-                    base64Image: base64Image, // Base64 verisini gönder
-                }
-            );
+    try {
+      const formData = new FormData();
+formData.append('image', file); // 'image' burada server tarafındaki alan adı ile uyumlu olmalı
 
-            if (response.data && response.data.file) {
-                setImage(response.data.file.url); // Resmi güncelle
-                saveToSessionStorage(`${initialImage.id}_${initialImage.path}`, response.data.file.url);
-                updateCacheTimestamp(`${initialImage.id}_${initialImage.path}`); // Cache zamanını güncelle
+try {
+    const response = await axios.post('https://api.elcitr.com/api/images/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data', // Doğru başlık
+        },
+    });
+    // İşlem başarılı
+} catch (error) {
+    console.error('Hata:', error);
+}
 
-                Swal.fire({
-                    title: 'Başarılı!',
-                    text: 'Resim güncellendi!',
-                    icon: 'success',
-                    confirmButtonText: 'Tamam',
-                });
-            } else {
-                Swal.fire({
-                    title: 'Hata!',
-                    text: 'Resim güncellenemedi.',
-                    icon: 'error',
-                    confirmButtonText: 'Tamam',
-                });
-            }
-        } catch (error) {
-            console.error('Hata:', error);
-            Swal.fire({
-                title: 'Hata!',
-                text: 'Güncelleme sırasında bir hata oluştu.',
-                icon: 'error',
-                confirmButtonText: 'Tamam',
-            });
-        }
-    };
+      
 
-    reader.readAsDataURL(file); // Dosyayı base64 formatına dönüştür
+        Swal.fire({
+            title: 'Başarılı!',
+            text: 'Resim güncellendi!',
+            icon: 'success',
+            confirmButtonText: 'Tamam',
+        });
+    } catch (error) {
+        console.error('Hata:', error);
+        Swal.fire({
+            title: 'Hata!',
+            text: 'Resim yüklenirken bir hata oluştu.',
+            icon: 'error',
+            confirmButtonText: 'Tamam',
+        });
+    }
 };
+
 
 
 
