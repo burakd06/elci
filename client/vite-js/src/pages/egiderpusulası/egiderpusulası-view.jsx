@@ -5,9 +5,9 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import { usePopover } from 'src/hooks/use-popover';
 import TextEditor from 'src/components/texteditor/texteditor';
-import { getPageTexts } from 'src/api/comments/getComments';
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
-import { getImages } from 'src/api/comments/getComments';
+
 
 export function PusulaView() {
  const [imagesList, setImagesList] = useState([]);
@@ -115,6 +115,7 @@ useEffect(() => {
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
             <ImageEditor
+            isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "epusula1", 
                     path: "/company/pusula", 
@@ -228,6 +229,7 @@ useEffect(() => {
 
         <Grid item xs={12} md={6}>
         <ImageEditor
+        isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "epusula2", 
                     path: "/company/pusula", 

@@ -7,16 +7,18 @@ import { textGradient } from 'src/theme/styles';
 import { varFade, MotionViewport } from 'src/components/animate';
 import React, { useState, useEffect } from 'react';
 import TextEditor from 'src/components/texteditor/texteditor';
-import {getPageTexts} from 'src/api/comments/getComments'
+import {getPageTexts,getImages} from 'src/api/comments/getComments'
+import ImageEditor from 'src/components/imageeditor/imageeditor';
 
 
 function AnimatedDiv({ children }) {
+ 
   const variants = varFade({ distance: 24 }).inUp;
   return <m.div variants={variants}>{children}</m.div>;
 }
 
 export function HomeGörsel({ sx, ...other }) {
-
+ const [imagesList, setImagesList] = useState([]);
   const [decodedToken, setDecodedToken] = useState(null)
   useEffect(() => {
    const token = localStorage.getItem('token'); // Token'ı local storage'dan al
@@ -42,6 +44,19 @@ export function HomeGörsel({ sx, ...other }) {
  
    fetchTextData(); 
  }, []);
+
+ useEffect(() => {
+  const fetchImageData = async () => {
+    try {
+      const imgresponse = await getImages("");
+      console.log("Gelen resimler", imgresponse.data);
+      setImagesList(imgresponse.data)
+    } catch (error) {
+      console.error('resim alma hatası:', error);
+    }
+  };
+  fetchImageData();
+}, []);
  const parseJwt = (token) => {
    if (!token) return null; 
    const base64Url = token.split('.')[1];
@@ -84,15 +99,19 @@ export function HomeGörsel({ sx, ...other }) {
           }}
         >
           <AnimatedDiv>
-            <Box
-              component="img"
-              loading="lazy"
-              alt="Cover"
-              src={`${CONFIG.assetsDir}/assets/images/home/newstart.webp`}
-              sx={{ width: 720, borderRadius: 8, marginTop: 10 }}
-            />
+          <ImageEditor
+            isAdmin={decodedToken?.isAdmin}
+                  initialImage={{
+                    id: "homesolution", 
+                    path: "/", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: 720, borderRadius: 8, marginTop: 10
+                  }}
+                />           
           </AnimatedDiv>
-
           <AnimatedDiv>
             <TextEditor
             css={{ color: 'text.disabled' }}

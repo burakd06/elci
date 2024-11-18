@@ -4,9 +4,9 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import TextEditor from 'src/components/texteditor/texteditor';
-import { getPageTexts } from 'src/api/comments/getComments';
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
-import { getImages } from 'src/api/comments/getComments';
+
 
 
 export function FaturaView() {
@@ -116,6 +116,7 @@ const handleChangeFavorite = useCallback((event) => {
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>         
             <ImageEditor
+            isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "efatura1", 
                     path: "/company/e-fatura", 
@@ -128,7 +129,6 @@ const handleChangeFavorite = useCallback((event) => {
                     border: '2px solid #ddd',
                     transform: animate ? 'translateX(0)' : 'translateX(-100px)',
                     opacity: animate ? 1 : 0,
-                    transition: 'all 0.8s ease-in-out',
                     ':hover': {
                       transform: 'scale(1.05)',
                       transition: 'transform 0.3s ease-in-out',
@@ -232,6 +232,7 @@ const handleChangeFavorite = useCallback((event) => {
 
           <Grid item xs={12} md={6}>
             <ImageEditor
+            isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "efatura2", 
                     path: "/company/e-fatura", 

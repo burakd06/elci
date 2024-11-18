@@ -1,14 +1,13 @@
 import { m } from 'framer-motion';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import { CONFIG } from 'src/config-global';
 import { varAlpha, textGradient } from 'src/theme/styles';
 import { varFade, MotionViewport } from 'src/components/animate';
 import { useEffect,useState } from 'react';
-import axios from 'axios';
 import TextEditor from 'src/components/texteditor/texteditor';
-import {getPageTexts} from 'src/api/comments/getComments'
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
+import ImageEditor from 'src/components/imageeditor/imageeditor';
 
 
 function AnimatedDiv({ children }) {
@@ -21,7 +20,7 @@ function AnimatedDiv({ children }) {
 export function HomeBanner({ sx, ...other }) {
   const theme = useTheme();
   const [textDataList, setTextDataList] = useState([]);
-
+  const [imagesList, setImagesList] = useState([]);
 
   const [decodedToken, setDecodedToken] = useState(null)
  useEffect(() => {
@@ -47,6 +46,7 @@ useEffect(() => {
 
   fetchTextData(); 
 }, []);
+
 const parseJwt = (token) => {
   if (!token) return null; 
   const base64Url = token.split('.')[1];

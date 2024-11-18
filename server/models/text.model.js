@@ -6,9 +6,30 @@ export async function fetchAllTextsByPage(page) {
     try {
         const result = await prisma.texts.findMany({
             where: {
-                path: { contains: page }
-            }
+                path: {
+                    contains: page, // Burada 'page' parametresinin doğru formatta olduğundan emin olun
+                },
+            },
         });
+        return result;
+    } catch (error) {
+        console.error('Veri alma hatası:', error); // Daha fazla bilgi için hata çıktısını inceleyin
+        throw new Error('Veri alınırken hata oluştu.');
+    }
+}
+
+
+
+export async function getTextById(id) {
+    try {
+        const result = await prisma.texts.findUnique({
+            where: {
+                id: id,
+            },
+        });
+        if (!result) {
+            throw new Error('Metin bulunamadı.');
+        }
         return result;
     } catch (error) {
         console.error('Veri alma hatası:', error);
@@ -16,19 +37,6 @@ export async function fetchAllTextsByPage(page) {
     }
 }
 
-export async function getTextById(id) {
-    try {
-        const result = await prisma.texts.findUnique({
-            where: {
-                id: id // id'ye göre metni bul
-            }
-        });
-        return result; // Sonuç null ise, hata fırlatmaya gerek yok
-    } catch (error) {
-        console.error('Veri alma hatası:', error);
-        throw new Error('Veri alınırken hata oluştu.');
-    }
-}
 
 export async function updateText(id, newText) {
     try {
@@ -47,24 +55,3 @@ export async function updateText(id, newText) {
     }
 }
 
-// texts tablosunu oluştur
-const createTextsTable = async () => {
-    const createTableQuery = `
-        CREATE TABLE IF NOT EXISTS texts (
-            id TEXT PRIMARY KEY,
-            element TEXT NOT NULL,
-            path TEXT NOT NULL,
-            text TEXT NOT NULL
-        );
-    `;
-
-    try {
-        await prisma.$executeRaw(createTableQuery);
-        console.log('texts tablosu başarıyla oluşturuldu.');
-    } catch (error) {
-        console.error('Text tablosu oluşturulurken hata:', error);
-    }
-};
-
-// Uygulama başladığında tabloyu oluştur
-createTextsTable();

@@ -5,9 +5,9 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import { usePopover } from 'src/hooks/use-popover';
 import TextEditor from 'src/components/texteditor/texteditor';
-import { getPageTexts } from 'src/api/comments/getComments';
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
-import { getImages } from 'src/api/comments/getComments';
+
 
 export function EimzaView() {
   const [imagesList, setImagesList] = useState([]);
@@ -56,7 +56,7 @@ const renderToolbar = (
 useEffect(() => {
   const fetchImageData = async () => {
     try {
-      const imgresponse = await getImages("eimza");
+      const imgresponse = await getImages("e-imza");
       console.log("Gelen resimler", imgresponse.data);
       setImagesList(imgresponse.data)
     } catch (error) {
@@ -116,9 +116,10 @@ useEffect(() => {
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
             <ImageEditor
+            isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "eimza1", 
-                    path: "/company/e-eimza", 
+                    path: "/company/e-imza", 
                   }}
                   imagesList={imagesList} 
                   setImagesList={setImagesList}
@@ -228,25 +229,27 @@ useEffect(() => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Box
-            component="video"
-            src="/assets/images/ürünler/eimza.mp4"
-            autoPlay
-            loop
-            muted
-            sx={{
-              border: '2px solid black',
-              borderRadius: '11px',
-              width: '100%',
-              transform: animate ? 'translateX(0)' : 'translateX(50px)',
-              opacity: animate ? 1 : 0,
-              transition: 'all 0.8s ease-in-out',
-              ':hover': {
-                transform: 'scale(1.05)',
-                transition: 'transform 0.3s ease-in-out',
-              },
-            }}
-          />
+        <ImageEditor
+        isAdmin={decodedToken?.isAdmin}
+                  initialImage={{
+                    id: "eimza2", 
+                    path: "/company/e-imza", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    transition: 'all 0.8s ease-in-out',
+                    ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  }}
+                />
         </Grid>
         </Grid>
         <TextEditor 

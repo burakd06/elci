@@ -3,13 +3,16 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import { _mock } from 'src/_mock';
 import { useEffect, useState } from 'react';
-import {getPageTexts} from 'src/api/comments/getComments'
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
+import ImageEditor from 'src/components/imageeditor/imageeditor';
 import TextEditor from 'src/components/texteditor/texteditor';
+import { maxWidth } from '@mui/system';
 const IMAGES = [...Array(4)].map((_, index) => _mock.image.travel(index));
 
 
 
 export function AboutGiris({ sx, ...other }) {
+  const [imagesList, setImagesList] = useState([]);
   const [textDataList, setTextDataList] = useState([]);
   useEffect(() => {
     const fetchTextData = async () => {
@@ -23,6 +26,19 @@ export function AboutGiris({ sx, ...other }) {
     };
 
     fetchTextData(); 
+  }, []);
+
+  useEffect(() => {
+    const fetchImageData = async () => {
+      try {
+        const imgresponse = await getImages("about");
+        console.log("Gelen resimler", imgresponse.data);
+        setImagesList(imgresponse.data)
+      } catch (error) {
+        console.error('resim alma hatası:', error);
+      }
+    };
+    fetchImageData();
   }, []);
 
 const parseJwt = (token) => {
@@ -106,25 +122,97 @@ const [decodedToken, setDecodedToken] = useState(null);
           />
         </Box>
 
-        <Grid container disableEqualOverflow spacing={{ xs: 0, sm: 3 }}>
-          {IMAGES.map((item, index) => (
-            <Grid key={item} xs={12} sm={6} md={index === 3 ? 6 : 2}>
-              <Box
-                component="img"
-                alt={item}
-                src={item}
-                sx={{
-                  width: 1,
+        <Grid container spacing={{ xs: 0, sm: 3 }}justifyContent="center"  // Tüm resimleri yatayda ortalar
+  alignItems="center"  // Dikeyde ortalar
+  sx={{ textAlign: 'center' }}>
+        <Grid item xs={12} sm={6} md={3}>
+          <ImageEditor
+          isAdmin={decodedToken?.isAdmin}
+                  initialImage={{
+                    id: "about1", 
+                    path: "/company/about", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{width: 1,
+                    height: '360pt',
+                    width: '150pt',
+                    borderRadius: 13,
+                    objectFit: 'cover',
+              ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                    
+                  }}
+                />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                <ImageEditor
+                isAdmin={decodedToken?.isAdmin}
+                initialImage={{
+                  id: "about2", 
+                  path: "/company/about", 
+                }}
+                imagesList={imagesList} 
+                setImagesList={setImagesList}
+                css={{width: 1,
                   height: '360pt',
+                  width: '150pt',
                   borderRadius: 13,
                   objectFit: 'cover',
-                  ...(index !== 0 && {
-                    display: { xs: 'none', sm: 'block' },
-                  }),
+            ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  
                 }}
               />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+              <ImageEditor
+              isAdmin={decodedToken?.isAdmin}
+              initialImage={{
+                id: "about3", 
+                path: "/company/about", 
+              }}
+              imagesList={imagesList} 
+              setImagesList={setImagesList}
+              css={{width: 1,
+                height: '360pt',
+                width: '150pt',
+                borderRadius: 13,
+                objectFit: 'cover',
+          ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                
+              }}
+            />
             </Grid>
-          ))}
+        <Grid item xs={12} sm={6} md={3}>
+        <ImageEditor
+        isAdmin={decodedToken?.isAdmin}
+                  initialImage={{
+                    id: "about4", 
+                    path: "/company/about", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{width: 1,
+                    height: '360pt',
+                    width: '150pt',
+                    borderRadius: 13,
+                    objectFit: 'cover',
+              ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                    
+                  }}
+                />
+                </Grid>
         </Grid>
       </Container>
     </Box>

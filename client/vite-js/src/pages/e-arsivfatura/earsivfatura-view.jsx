@@ -4,9 +4,9 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import TextEditor from 'src/components/texteditor/texteditor';
-import { getPageTexts } from 'src/api/comments/getComments';
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
-import { getImages } from 'src/api/comments/getComments';
+
 
 
 
@@ -109,6 +109,7 @@ export function ArsivFaturaView() {
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
                <ImageEditor
+               isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "efaturaarsiv1", 
                     path: "/company/e-arsivfatura", 
@@ -223,6 +224,7 @@ export function ArsivFaturaView() {
 
           <Grid item xs={12} md={6}>
           <ImageEditor
+          isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "efaturaarsiv2", 
                     path: "/company/e-arsivfatura", 

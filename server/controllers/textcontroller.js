@@ -29,7 +29,11 @@ export const getTextById = async (req, res) => {
 };
 export const updateTextById = async (req, res) => {
     const { id } = req.params;
-    const { text } = req.body;
+    const { text } = req.body;  // Burada 'text' parametresinin düzgün geldiğinden emin olun
+
+    if (!text) {
+        return res.status(400).json({ error: 'Yeni metin gerekli.' });  // Metin parametresi yoksa 400 hata kodu dön
+    }
 
     try {
         const updatedText = await updateText(id, text);

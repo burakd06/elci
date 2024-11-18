@@ -9,9 +9,9 @@ import { varAlpha, bgGradient, textGradient } from 'src/theme/styles';
 import { varFade, MotionViewport } from 'src/components/animate';
 import { useEffect, useState } from 'react';
 import TextEditor from 'src/components/texteditor/texteditor';
-import {getPageTexts} from 'src/api/comments/getComments'
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
-import { getImages } from 'src/api/comments/getComments';
+
 
 function AnimatedDiv({ children }) {
   const variants = varFade({ distance: 24 }).inUp;
@@ -19,6 +19,7 @@ function AnimatedDiv({ children }) {
 }
 
 export function HomeGiris({ sx, ...other }) {
+  const [animate, setAnimate] = useState(false);
   const [imagesList, setImagesList] = useState([]);
   const [decodedToken, setDecodedToken] = useState(null)
  useEffect(() => {
@@ -149,28 +150,28 @@ const parseJwt = (token) => {
         display: { xs: 'none', md: 'block' },
       }}
     >
-      {[...Array(7)].map((_, index) => (
-        <Box
-          key={index}
-          component={m.img}
-          variants={varFade({ distance: 40 }).inDown}
-          alt="Home hero"
-          src={`${CONFIG.assetsDir}/assets/images/home/logo-${index + 1}.webp`}
-          sx={{
-            top: 0,
-            left: -24,
-            m: 'auto',
-            bottom: 0,
-            width: 900,
-            height: 600,
-            maxWidth: 'unset',
-            zIndex: 9 - index,
-            position: 'absolute',
-            borderRadius: 10,
-          }}
-        />
+      
+        <Box/>
         
-      ))}
+      
+      <ImageEditor
+            isAdmin={decodedToken?.isAdmin}
+                  initialImage={{
+                    id: "homegiris", 
+                    path: "/", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    top: 0,
+                    left: -24,
+                    m: 'auto',
+                    bottom: 0,
+                    width: 900,
+                    height: 600,
+                    borderRadius: 10,
+                  }}
+                />
     </Box>
   );
 
@@ -180,7 +181,6 @@ const parseJwt = (token) => {
       sx={{
         ...bgGradient({
           color: `to bottom, ${varAlpha(theme.vars.palette.background.defaultChannel, 0.9)}, ${varAlpha(theme.vars.palette.background.defaultChannel, 0.9)}`,
-          imgUrl: `${CONFIG.assetsDir}/assets/background/overlay-1.webp`,
         }),
         py: 10,
         overflow: 'hidden',
@@ -211,6 +211,7 @@ const parseJwt = (token) => {
         {renderContent}
         {renderImage}
       </Container>
+      
     </Box>
   );
 }

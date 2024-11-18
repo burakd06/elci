@@ -4,9 +4,9 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import TextEditor from 'src/components/texteditor/texteditor';
-import { getPageTexts } from 'src/api/comments/getComments';
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
-import { getImages } from 'src/api/comments/getComments';
+
 
 export function İrsaliyeView() {
 const [imagesList, setImagesList] = useState([]);
@@ -53,7 +53,7 @@ const renderToolbar = (
   useEffect(() => {
     const fetchImageData = async () => {
       try {
-        const imgresponse = await getImages("e-irsaliye");
+        const imgresponse = await getImages("eirsaliye");
         console.log("Gelen resimler", imgresponse.data);
         setImagesList(imgresponse.data)
       } catch (error) {
@@ -113,8 +113,9 @@ const renderToolbar = (
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
           <ImageEditor
+          isAdmin={decodedToken?.isAdmin}
                   initialImage={{
-                    id: "eirsaliye", 
+                    id: "eirsaliye1", 
                     path: "/company/eirsaliye", 
                   }}
                   imagesList={imagesList} 
@@ -227,6 +228,7 @@ const renderToolbar = (
 
         <Grid item xs={12} md={6}>
         <ImageEditor
+        isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "eirsaliye2", 
                     path: "/company/eirsaliye", 

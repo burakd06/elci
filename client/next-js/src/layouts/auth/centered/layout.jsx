@@ -60,7 +60,7 @@ export function AuthCenteredLayout({ sx, children, header }) {
                 </Link>
                 {/* -- Language popover -- */}
                 <LanguagePopover data={langs} />
-                {/* -- Settings button -- */}
+                -- Settings button --
                 <SettingsButton />
               </Box>
             ),

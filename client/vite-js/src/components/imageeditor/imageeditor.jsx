@@ -4,21 +4,33 @@ import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { saveToSessionStorage, getFromSessionStorage, isCacheExpired, updateCacheTimestamp } from 'src/utils/localStorageHelper'; // sessionStorage kullanımı
 
 const ImageEditor = ({ initialImage, imagesList, setImagesList, css, isAdmin }) => {
   const [image, setImage] = useState(initialImage); 
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null); 
   const [imagePreview, setImagePreview] = useState(null); 
-
+  const maxSize = 1 * 1024 * 1024; // 1MB
+  
   useEffect(() => {
-    if (imagesList.length > 0) {
+    const localStorageKey = `${initialImage.id}_${initialImage.path}`;
+    if (!isCacheExpired(localStorageKey)) {
+      const cachedImage = getFromSessionStorage(localStorageKey);
+      if (cachedImage) {
+        setImage(cachedImage);
+      } else {
+        setError('Resim bulunamadı');
+      }
+    } else if (imagesList.length > 0) {
       const selectedImage = imagesList.find(
         (img) => img.id === initialImage.id && img.path === initialImage.path
       );
 
       if (selectedImage) {
         setImage(selectedImage.url);
+        saveToSessionStorage(localStorageKey, selectedImage.url);
+        updateCacheTimestamp(localStorageKey);
       } else {
         setError('Resim bulunamadı');
       }
@@ -28,14 +40,29 @@ const ImageEditor = ({ initialImage, imagesList, setImagesList, css, isAdmin }) 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
+      if (selectedFile.size > maxSize) {
+        console.warn('Image is too large to store in sessionStorage');
+        return Swal.fire({
+          title: 'Hata!',
+          text: 'Dosya boyutu çok büyük!',
+          icon: 'error',
+          confirmButtonText: 'Tamam',
+        });
+      }
+  
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result); 
-        setFile(selectedFile); 
+        setImagePreview(reader.result);
+        setFile(selectedFile);
       };
       reader.readAsDataURL(selectedFile);
     }
+  
+    // Her durumda bir değer döndürülmeli
+    return null;
   };
+  
+  
 
   const handleUpdate = async () => {
     if (!file) {
@@ -47,69 +74,65 @@ const ImageEditor = ({ initialImage, imagesList, setImagesList, css, isAdmin }) 
         });
     }
 
-    // Dosya boyutunu kontrol et
-    if (file.size > 50 * 1024 * 1024) { // 50MB
-        return Swal.fire({
-            title: 'Hata!',
-            text: 'Dosya boyutu çok büyük! Lütfen 50MB veya daha küçük bir dosya seçin.',
-            icon: 'error',
-            confirmButtonText: 'Tamam',
-        });
-    }
+    // Dosyayı base64 formatına dönüştür
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+        const base64Image = reader.result.split(',')[1]; // Base64 kodunu ayıklayın (başındaki veri türünü çıkar)
 
-    const result = await Swal.fire({
-        title: 'Resmi güncellemek istediğinize emin misiniz?',
-        showCancelButton: true,
-        confirmButtonText: 'Evet',
-        cancelButtonText: 'Hayır',
-        focusCancel: true,
-    });
-
-    if (result.isConfirmed) {
         try {
-            const formData = new FormData();
-            formData.append('file', file); 
-
+            // Base64 verisini gönder
             const response = await axios.post(
                 `https://api.elcitr.com/api/images/upload`,
-                formData,
                 {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
+                    id: initialImage.id, // Güncellenmek istenen resmin ID'si
+                    base64Image: base64Image, // Base64 verisini gönder
                 }
             );
 
-            console.log('Güncelleme yanıtı:', response.data);
+            if (response.data && response.data.file) {
+                setImage(response.data.file.url); // Resmi güncelle
+                saveToSessionStorage(`${initialImage.id}_${initialImage.path}`, response.data.file.url);
+                updateCacheTimestamp(`${initialImage.id}_${initialImage.path}`); // Cache zamanını güncelle
 
-            const updatedIndex = imagesList.findIndex((img) => img.id === initialImage.id);
-            if (updatedIndex !== -1) {
-                const updatedList = [...imagesList];
-                updatedList[updatedIndex].url = imagePreview; 
-                setImagesList(updatedList);
+                Swal.fire({
+                    title: 'Başarılı!',
+                    text: 'Resim güncellendi!',
+                    icon: 'success',
+                    confirmButtonText: 'Tamam',
+                });
+            } else {
+                Swal.fire({
+                    title: 'Hata!',
+                    text: 'Resim güncellenemedi.',
+                    icon: 'error',
+                    confirmButtonText: 'Tamam',
+                });
             }
-
-            await Swal.fire({
-                title: 'Başarılı!',
-                text: 'Resim güncellendi!',
-                icon: 'success',
-                confirmButtonText: 'Tamam',
-            });
         } catch (error) {
-            console.error('Güncelleme hatası:', error);
-
-            await Swal.fire({
+            console.error('Hata:', error);
+            Swal.fire({
                 title: 'Hata!',
                 text: 'Güncelleme sırasında bir hata oluştu.',
                 icon: 'error',
                 confirmButtonText: 'Tamam',
             });
         }
-    } else {
-        Swal.fire('Güncelleme iptal edildi.');
-    }
+    };
+
+    reader.readAsDataURL(file); // Dosyayı base64 formatına dönüştür
 };
 
+
+
+
+
+
+
+
+
+
+
+  
 
   return (
     <div>

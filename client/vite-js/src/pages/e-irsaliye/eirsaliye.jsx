@@ -7,7 +7,7 @@ import { İrsaliyeView } from 'src/pages/e-irsaliye/eirsaliye-view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `E-Arsiv Fatura ${CONFIG.appName}` };
+const metadata = { title: `E-İrsaliye ${CONFIG.appName}` };
 
 export default function Page() {
    

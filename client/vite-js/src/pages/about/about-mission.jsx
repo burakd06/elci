@@ -5,11 +5,15 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import { CONFIG } from 'src/config-global';
 import { useEffect, useState } from 'react';
-import {getPageTexts} from 'src/api/comments/getComments'
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
+import ImageEditor from 'src/components/imageeditor/imageeditor';
 import TextEditor from 'src/components/texteditor/texteditor';
 
+
 export function AboutMission({ sx, ...other }) {
+  const [imagesList, setImagesList] = useState([]);
   const [textDataList, setTextDataList] = useState([]);
+
   useEffect(() => {
     const fetchTextData = async () => {
       try {
@@ -21,6 +25,19 @@ export function AboutMission({ sx, ...other }) {
     };
 
     fetchTextData(); 
+  }, []);
+
+  useEffect(() => {
+    const fetchImageData = async () => {
+      try {
+        const imgresponse = await getImages("about");
+        console.log("Gelen resimler", imgresponse.data);
+        setImagesList(imgresponse.data)
+      } catch (error) {
+        console.error('resim alma hatası:', error);
+      }
+    };
+    fetchImageData();
   }, []);
 
    const parseJwt = (token) => {
@@ -115,13 +132,26 @@ export function AboutMission({ sx, ...other }) {
           spacing={{ xs: 5, md: 3 }}
         >
           <Grid xs={12} md={6} lg={6} sx={{ textAlign: { xs: 'center', md: 'unset' } }}>
-            <Box
-              component="img"
-              loading="lazy"
-              alt="About vision"
-              src={`${CONFIG.assetsDir}/assets/images/travel/teamwork.jpg`}
-              sx={{ width: 480, height: 480, borderRadius: '85px' }}
-            />
+          <ImageEditor
+            isAdmin={decodedToken?.isAdmin}
+                  initialImage={{
+                    id: "aboutnedenbiz", 
+                    path: "/company/about", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                   width: '650px',
+                   height: '850px',
+                   borderRadius:'45px',
+                   ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                    
+                  }}
+                /> 
+
           </Grid>
 
           <Grid xs={12} md={6} lg={6}>

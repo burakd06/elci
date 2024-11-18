@@ -1,4 +1,5 @@
-import { fetchAllImagesModel, fetchImageByIdModel, saveImageModel } from '../models/image.model.js';
+import { fetchAllImagesModel, fetchImageByIdModel, saveImageModel } from 
+'../models/image.model.js';
 
 export async function fetchAllImages(page) {
     try {
@@ -20,12 +21,23 @@ export async function fetchImageById(id) {
     }
 }
 
-export async function saveImage(id, imageUrl) {
+export async function saveImageService(imageData) {
     try {
-        const updatedImage = await saveImageModel(id, imageUrl);
-        return updatedImage;
+        console.log("Güncelleme öncesi id:", imageData.id);  // id'yi logla
+        console.log("Güncelleme yapılacak url:", imageData.url);  // URL'yi logla
+
+        // Veritabanı güncellemesi
+        const updatedImage = await saveImageModel(imageData);  // Burada direkt olarak model fonksiyonunu çağırıyoruz
+
+        console.log("Güncellenmiş Resim:", updatedImage); // Güncellenen resmi logla
+        return updatedImage; // Güncellenen resmi döndür
     } catch (error) {
-        console.error('Resim kaydedilirken hata:', error);
+        console.error("Resim kaydedilirken hata oluştu:", error);  // Hata logu
         throw new Error('Resim kaydedilirken hata oluştu.');
     }
 }
+
+
+
+
+

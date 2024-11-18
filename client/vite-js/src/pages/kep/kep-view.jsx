@@ -4,9 +4,9 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import TextEditor from 'src/components/texteditor/texteditor';
-import { getPageTexts } from 'src/api/comments/getComments';
+import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
-import { getImages } from 'src/api/comments/getComments';
+
 
 
 
@@ -108,6 +108,7 @@ export function KepView() {
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>
           <ImageEditor
+          isAdmin={decodedToken?.isAdmin}
                   initialImage={{
                     id: "kep1", 
                     path: "/company/kep", 
@@ -221,25 +222,27 @@ export function KepView() {
           </Grid>
 
           <Grid item xs={12} md={6}>
-          <Box
-            component="video"
-            src="/assets/images/ürünler/kep.mp4"
-            autoPlay
-            loop
-            muted
-            sx={{
-              border: '2px solid black',
-              borderRadius: '11px',
-              width: '100%',
-              transform: animate ? 'translateX(0)' : 'translateX(50px)',
-              opacity: animate ? 1 : 0,
-              transition: 'all 0.8s ease-in-out',
-              ':hover': {
-                transform: 'scale(1.05)',
-                transition: 'transform 0.3s ease-in-out',
-              },
-            }}
-          />
+          <ImageEditor
+          isAdmin={decodedToken?.isAdmin}
+                  initialImage={{
+                    id: "kep2", 
+                    path: "/company/kep", 
+                  }}
+                  imagesList={imagesList} 
+                  setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    transition: 'all 0.8s ease-in-out',
+                    ':hover': {
+                      transform: 'scale(1.05)',
+                      transition: 'transform 0.3s ease-in-out',
+                    },
+                  }}
+                />
           </Grid>
         </Grid>
         <TextEditor 
