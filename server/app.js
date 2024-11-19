@@ -5,15 +5,14 @@ import sendFormRoutes from './routes/sendformRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import textRoutes from './routes/textRoutes.js';
 import imageRoutes from './routes/imageRoutes.js';
-import fileUpload from 'express-fileupload';
 
 
 
 const port = 3002;
 const app = express();
-app.use(fileUpload({
-    limits: { fileSize: 5 * 1024 * 1024 } // 5MB sınırını belirler
-}));
+
+
+
 
 app.use(cors());
 app.use(express.json());

@@ -47,7 +47,7 @@ const handleFileChange = async (event) => {
 
     try {
         // Dosya yükleme isteği
-        const response = await axios.post('https://api.elcitr.com/api/images/upload', formData, {
+        const response = await axios.post('https://api.elcitr.com/api/uploadImage', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data', // Axios bunu otomatik ayarlamalı, ancak ihtimale karşı buraya da ekleyebilirsiniz
             },
