@@ -22,16 +22,3 @@ export async function fetchImageByIdModel(id) {
     }
 }
 
-export async function saveImageModel(imageData) {
-    try {
-        const savedImage = await prisma.images.upsert({
-            where: { id: imageData.id },
-            update: { url: imageData.url, path: imageData.path || null },
-            create: { id: imageData.id, url: imageData.url, path: imageData.path || null },
-        });
-        return savedImage;
-    } catch (error) {
-        console.error('Veritabanına kayıt hatası:', error);
-        throw new Error('Veritabanına kayıt sırasında hata oluştu.');
-    }
-}

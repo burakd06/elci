@@ -10,14 +10,15 @@ import {getPageTexts} from 'src/api/comments/getComments'
 
 
 const HIGHLIGHT_FEATURES = [
-  { label: 'E-Fatura', icon: 'ion:receipt-outline', id: 'homeIcon-E-Fatura' },
-  { label: 'E-Arşiv', icon: 'material-symbols:archive-outline', id: 'homeIcon-E-Arşiv' },
-  { label: 'E-Serbest Meslek Makbuzu', icon: 'material-symbols:receipt', id: 'homeIcon-E-Serbest-Meslek-Makbuzu' },
-  { label: 'E-Müstahsil Makbuzu', icon: 'material-symbols:receipt', id: 'homeIcon-E-Müstahsil-Makbuzu' },
+  { label: 'E-Belge', icon: 'ion:receipt-outline', id: 'homeIcon-E-Fatura' },
   { label: 'E-Defter', icon: 'ph:notebook-light', id: 'homeIcon-E-Defter' },
+  { label: 'E-Aktarım', icon: 'material-symbols:archive-outline', id: 'homeIcon-E-Arşiv' },
+  { label: 'E-Beyan', icon: 'material-symbols:receipt', id: 'homeIcon-E-Serbest-Meslek-Makbuzu' },
   { label: 'E-Saklama', icon: 'material-symbols:lock-outline', id: 'homeIcon-E-Saklama' },
+  { label: 'Kep ', icon: 'material-symbols:receipt', id: 'homeIcon-E-Müstahsil-Makbuzu' },
   { label: 'E-imza', icon: 'fluent:signature-16-regular', id: 'homeIcon-E-imza' },
 ];
+  
   
 
 

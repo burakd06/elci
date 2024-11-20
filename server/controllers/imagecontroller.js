@@ -1,4 +1,7 @@
-import { fetchAllImages, fetchImageById, saveImageService } from '../services/image.service.js';
+import { fetchAllImages, fetchImageById } from '../services/image.service.js';
+import fs from 'fs';
+import path from 'path';
+import prisma from '../db.js';
 
 export const getImages = async (req, res) => {
     try {
@@ -24,27 +27,45 @@ export const getImageById = async (req, res) => {
     }
 }
 
-export const uploadImage = (req, res) => {
+export const uploadImage = async (req, res) => {
     try {
-        // Gelen isteği kontrol et (dosya olup olmadığını)
-        if (!req.file) {
-            console.log("Dosya gönderilmedi!");  // Loglama ile debug yap
-            return res.status(400).json({ error: 'Dosya yüklenemedi!' });
+        console.log("Gelen Body:", req.body);
+        console.log("Gelen Dosya:", req.file);
+
+        if (!req.body.id) {
+            return res.status(400).json({ error: 'Gerekli parametre "id" gönderilmedi.' });
         }
 
-        // Eğer dosya varsa, dosyanın bilgilerini logla
-        console.log("Dosya başarıyla alındı: ", req.file);
-        console.log("Dosya Yolu: ", req.file.path);
-        console.log("Dosya İsmi: ", req.file.filename);
+        // Prisma ile işlem yapmadan önce id'nin formatını kontrol edin
+        const id = req.body.id;
 
-
-        // Dosya başarıyla yüklendiyse, başarılı bir yanıt gönder
-        return res.status(200).json({
-            message: 'Dosya başarıyla yüklendi.',
-            filePath: `/uploads/${req.file.filename}`,
+        // Prisma işlemi
+        const image = await prisma.images.findUnique({
+            where: { id },
         });
+
+        if (!image) {
+            return res.status(404).json({ error: 'Resim bulunamadı.' });
+        }
+
+        // Yeni URL'yi oluşturun
+        const filePath = `/uploads/${req.imageFileName}`;
+        
+        // URL'yi güncelleyin (path sabit kalacak)
+        const updatedImage = await prisma.images.update({
+            where: { id },
+            data: {
+                url: filePath,  // Burada URL'yi güncelliyoruz
+                // path: image.path,  // path'i sabit tutuyoruz
+            },
+        });
+
+        // Başarılı yanıt
+        return res.status(200).json({ filePath });
     } catch (error) {
-        console.error("Hata oluştu: ", error);
+        console.error("Hata oluştu:", error);
         return res.status(500).json({ error: 'Sunucuda bir hata oluştu.' });
     }
 };
+
+

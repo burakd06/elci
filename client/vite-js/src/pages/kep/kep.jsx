@@ -6,7 +6,7 @@ import { CONFIG } from 'src/config-global';
 import { KepView } from 'src/pages/kep/kep-view';
 
 
-const metadata = { title: `E-Arsiv Fatura ${CONFIG.appName}` };
+const metadata = { title: `Kep ${CONFIG.appName}` };
 
 export default function Page() {
    

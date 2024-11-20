@@ -115,26 +115,27 @@ const handleChangeFavorite = useCallback((event) => {
         {/* Üst Kısım: Resim ve Ürün Detayları */}
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} md={6}>         
-            <ImageEditor
-            isAdmin={decodedToken?.isAdmin}
-                  initialImage={{
-                    id: "efatura1", 
-                    path: "/company/e-fatura", 
-                  }}
-                  imagesList={imagesList} 
-                  setImagesList={setImagesList}
-                  css={{
-                    width: '100%',
-                    borderRadius: '12px',
-                    border: '2px solid #ddd',
-                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
-                    opacity: animate ? 1 : 0,
-                    ':hover': {
-                      transform: 'scale(1.05)',
-                      transition: 'transform 0.3s ease-in-out',
-                    },
-                  }}
-                />
+          <ImageEditor
+    isAdmin={decodedToken?.isAdmin}
+    initialImage={{
+        id: "efatura1", 
+        path: "/company/e-fatura", // Sabit path
+    }}
+    imagesList={imagesList} 
+    setImagesList={setImagesList}
+    css={{
+        width: '100%',
+        borderRadius: '12px',
+        border: '2px solid #ddd',
+        transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+        opacity: animate ? 1 : 0,
+        ':hover': {
+            transform: 'scale(1.05)',
+            transition: 'transform 0.3s ease-in-out',
+        },
+    }}
+/>
+
 
           </Grid>
           <Grid item xs={12} md={6}>

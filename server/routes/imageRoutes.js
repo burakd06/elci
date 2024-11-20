@@ -1,6 +1,5 @@
 import express from 'express';
 import { getImages, getImageById, uploadImage } from '../controllers/imagecontroller.js';
-import multer from 'multer';
 import upload from '../helper/multer.js';
 
 

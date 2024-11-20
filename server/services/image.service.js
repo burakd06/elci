@@ -1,4 +1,4 @@
-import { fetchAllImagesModel, fetchImageByIdModel, saveImageModel } from '../models/image.model.js';
+import { fetchAllImagesModel, fetchImageByIdModel } from '../models/image.model.js';
 
 export async function fetchAllImages() {
     try {
@@ -18,11 +18,3 @@ export async function fetchImageById(id) {
     }
 }
 
-export async function saveImageService(imageData) {
-    try {
-        return await saveImageModel(imageData);
-    } catch (error) {
-        console.error('Resim kaydedilirken hata:', error);
-        throw new Error('Resim kaydedilirken hata oluştu.');
-    }
-}
