@@ -18,8 +18,8 @@ export function Blog() {
   const [notification, setNotification] = useState('');
 
   const products = [
-    'E-Müstahsil Makbuzu', 'E-Arşiv Fatura', 'E-Fatura', 'E-İrsaliye', 
-    'E-Serbest Meslek Makbuzu', 'E-Defter', 'E-Saklama', 'E-İmza', 'KEP'
+    'e-Müstahsil Makbuzu', 'e-Arşiv Fatura', 'e-Fatura', 'e-İrsaliye', 
+    'e-Serbest Meslek Makbuzu', 'e-Defter', 'e-Saklama', 'e-İmza', 'KEP'
   ];
   const colors = [deepOrange[500], deepPurple[500], blue[500], green[500], red[500], pink[500]];
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -58,16 +58,33 @@ export function Blog() {
     return JSON.parse(jsonPayload);
   };
 
-  // Yorumları al
-  useEffect(() => {
-    if (selectedProduct) {
+ // Frontend tarafında, token ve admin bilgisini gönderiyoruz
+useEffect(() => {
+  if (selectedProduct) {
+      const token = localStorage.getItem('token');
+      const isAdmin = localStorage.getItem('isAdmin') === 'true';  // Admin bilgisini localStorage'dan alıyoruz
+
+      // Admin bilgisiyle yorumları alıyoruz
       axios.get(`https://api.elcitr.com/comments/product/${selectedProduct}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          headers: {
+              Authorization: `Bearer ${token}`,  // Token'ı başlıkta gönderiyoruz
+          },
+          params: {
+              isAdmin,  // Admin bilgisini parametre olarak gönderiyoruz
+          },
       })
-      .then(response => setComments(response.data))
-      .catch(error => console.error('Yorumları alamadım:', error));
-    }
-  }, [selectedProduct]);
+      .then(response => {
+          setComments(response.data);  // Yorumları set ediyoruz
+      })
+      .catch(error => {
+          console.error('Yorumları alamadım:', error);
+      });
+  }
+}, [selectedProduct]);
+
+  
+  
+
 
   // Yorum gönder
   const handleCommentSubmit = () => {

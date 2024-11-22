@@ -17,15 +17,15 @@ export const pageLinks = [
   {
     subheader: 'Ürünlerimiz',
     items: [
-      { title: 'E-Fatura', path: paths.urunler.efatura }, 
-      { title: 'E-Arşiv Fatura', path: paths.urunler.earsivfatura },
-      { title: 'E-İrsaliye', path: paths.urunler.eirsaliye },
-      { title: 'E-Serbest Meslek Makbuzu', path: paths.urunler.eserbestmeslekmakbuzu },
-      { title: 'E-Müstahsil Makbuzu', path: paths.urunler.emustahsil }, 
-      { title: 'E-Gider Pusulası', path: paths.urunler.pusula }, 
-      { title: 'E-Defter', path: paths.urunler.edefter },
-      { title: 'E-Saklama', path: paths.urunler.esaklama },
-      { title: 'E-İmza', path: paths.urunler.eimza },
+      { title: 'e-Fatura', path: paths.urunler.efatura }, 
+      { title: 'e-Arşiv Fatura', path: paths.urunler.earsivfatura },
+      { title: 'e-İrsaliye', path: paths.urunler.eirsaliye },
+      { title: 'e-Serbest Meslek Makbuzu', path: paths.urunler.eserbestmeslekmakbuzu },
+      { title: 'e-Müstahsil Makbuzu', path: paths.urunler.emustahsil }, 
+      { title: 'e-Gider Pusulası', path: paths.urunler.pusula }, 
+      { title: 'e-Defter', path: paths.urunler.edefter },
+      { title: 'e-Saklama', path: paths.urunler.esaklama },
+      { title: 'e-İmza', path: paths.urunler.eimza },
       { title: 'Kep', path: paths.urunler.kep },
       { title: 'Beyan', path: paths.urunler.beyan },
       { title: 'Aktarım', path: paths.urunler.aktarim },
@@ -50,41 +50,41 @@ export const pageLinks = [
 
 export const pageLinks2 = [
   {
-    subheader: 'E - Belge',
+    subheader: ' e-Belge',
     items: [
-         { title: 'E-Fatura', path: paths.urunler.efatura }, 
-         { title: 'E-Arşiv Fatura', path: paths.urunler.earsivfatura },
-         { title: 'E-İrsaliye', path: paths.urunler.eirsaliye },
-         { title: 'E-Serbest Meslek Makbuzu', path: paths.urunler.eserbestmeslekmakbuzu },
-         { title: 'E-Müstahsil Makbuzu', path: paths.urunler.emustahsil },
-         { title: 'E-Gider Pusulası', path: paths.urunler.pusula },  
+         { title: 'e-Fatura', path: paths.urunler.efatura }, 
+         { title: 'e-Arşiv Fatura', path: paths.urunler.earsivfatura },
+         { title: 'e-İrsaliye', path: paths.urunler.eirsaliye },
+         { title: 'e-Serbest Meslek Makbuzu', path: paths.urunler.eserbestmeslekmakbuzu },
+         { title: 'e-Müstahsil Makbuzu', path: paths.urunler.emustahsil },
+         { title: 'e-Gider Pusulası', path: paths.urunler.pusula },  
     ],
   },
   {
-    subheader: 'E - Defter Destek',
+    subheader: 'e-Defter Destek',
     items: [
       
-      { title: 'E-Defter', path: paths.urunler.edefter },
+      { title: 'e-Defter', path: paths.urunler.edefter },
     ],
   },
   {
-    subheader: 'E - Aktarım',
+    subheader: 'e-Aktarım',
     items: [
       
       { title: 'Aktarım', path: paths.urunler.aktarim },
     ],
   },
   {
-    subheader: 'E - Beyan',
+    subheader: 'e-Beyan',
     items: [
       
       { title: 'Beyan', path: paths.urunler.beyan },
     ],
   },
   {
-    subheader: 'E - Saklama',
+    subheader: 'e-Saklama',
     items: [
-      { title: 'E-Saklama', path: paths.urunler.esaklama },
+      { title: 'e-Saklama', path: paths.urunler.esaklama },
     ],
   },
   {
@@ -94,9 +94,9 @@ export const pageLinks2 = [
     ],
   },
   {
-    subheader: 'E - İmza',
+    subheader: 'e-İmza',
     items: [
-      { title: 'E-İmza', path: paths.urunler.eimza },
+      { title: 'e-İmza', path: paths.urunler.eimza },
     ],
   },
 

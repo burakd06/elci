@@ -15,7 +15,7 @@ const router = express.Router();
 router.get('/', authenticate, getComments);
 
 // Ürünle ilişkili yorumları alma
-router.get('/product/:product', authenticate, getCommentsByProduct);
+router.get('/product/:product',  getCommentsByProduct);
 
 // Yorum ekleme
 router.post('/add', createComment);

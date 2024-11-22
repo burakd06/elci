@@ -1,3 +1,4 @@
+import React from 'react';
 import { m } from 'framer-motion';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -11,7 +12,7 @@ import { useEffect, useState } from 'react';
 import TextEditor from 'src/components/texteditor/texteditor';
 import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
-
+import { useNavigate } from 'react-router-dom';
 
 function AnimatedDiv({ children }) {
   const variants = varFade({ distance: 24 }).inUp;
@@ -19,6 +20,10 @@ function AnimatedDiv({ children }) {
 }
 
 export function HomeGiris({ sx, ...other }) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/company/about');  // Yönlendirme
+  };
   const [animate, setAnimate] = useState(false);
   const [imagesList, setImagesList] = useState([]);
   const [decodedToken, setDecodedToken] = useState(null)
@@ -119,7 +124,7 @@ const parseJwt = (token) => {
         </Typography>
         
       </AnimatedDiv>
-
+      
       <AnimatedDiv>
         <TextEditor
          css={{ maxWidth: 480 }}
@@ -153,7 +158,7 @@ const parseJwt = (token) => {
       
         <Box/>
         
-      
+
       <ImageEditor
             isAdmin={decodedToken?.isAdmin}
                   initialImage={{
@@ -171,7 +176,27 @@ const parseJwt = (token) => {
                     height: 600,
                     borderRadius: 10,
                   }}
-                />
+                /> 
+               <button
+  style={{
+    padding: '10px 20px',
+    marginTop: '20px',
+    fontSize: '16px',
+    fontWeight: '400', 
+    color: 'black', 
+    backgroundColor: 'white', 
+    border: '1px solid black', 
+    borderRadius: '15px', 
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    display: 'inline-block',
+
+  }}
+  onClick={handleClick}
+>
+  Öğrenmek İstedikleriniz
+</button>
+
     </Box>
   );
 

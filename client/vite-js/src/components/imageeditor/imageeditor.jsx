@@ -155,7 +155,7 @@ const ImageEditor = ({ initialImage, imagesList, setImagesList, css, isAdmin }) 
                       key={fullImageUrl}
                       component="img"
                       src={fullImageUrl}  
-                      sx={{ ...css }}
+                      sx={{ ...css,padding: '20px',boxSizing: 'border-box'}}
                   />
               )}
           </div>

@@ -13,7 +13,7 @@ export function MycontactView() {
     <>
       <MycontactGiris />
 
-      <Map locations={_offices} />
+      {/* <Map locations={_offices} /> */}
 
       <MycontactForm  />
     
