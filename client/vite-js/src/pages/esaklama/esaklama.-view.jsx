@@ -119,6 +119,17 @@ useEffect(() => {
                   }}
                   imagesList={imagesList} 
                   setImagesList={setImagesList}
+                  css={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '2px solid #ddd',
+                    transform: animate ? 'translateX(0)' : 'translateX(-100px)',
+                    opacity: animate ? 1 : 0,
+                    ':hover': {
+                        transform: 'scale(1.05)',
+                        transition: 'transform 0.3s ease-in-out',
+                    },
+                }}
                 />
           </Grid>
 

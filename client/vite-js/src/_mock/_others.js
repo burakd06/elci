@@ -26,19 +26,36 @@ export const _socials = [
 
 // ----------------------------------------------------------------------
 
-export const _offices = ['Jordan', 'Canada', 'Portugal'].map((country, index) => ({
-  country,
-  id: _mock.id(index),
-  email: _mock.email(index),
-  photoUrl: _mock.image.travel(index),
-  address: _mock.fullAddress(index),
-  phoneNumber: _mock.phoneNumber(index),
-  position: [
-    { lat: 33, lng: 65 },
-    { lat: -12.5, lng: 18.5 },
-    { lat: 20.96, lng: 26.27 },
-  ][index],
-}));
+export const _offices = [
+  {
+    country: "Jordan",
+    id: "id-1",
+    email: "user1@example.com",
+    photoUrl: "https://via.placeholder.com/150?text=Travel+Image+1",
+    address: "Address 1, City, Jordan",
+    phoneNumber: "+123-456-7891",
+    position: { lat: 33, lng: 65 },
+  },
+  {
+    country: "Canada",
+    id: "id-2",
+    email: "user2@example.com",
+    photoUrl: "https://via.placeholder.com/150?text=Travel+Image+2",
+    address: "Address 2, City, Canada",
+    phoneNumber: "+123-456-7892",
+    position: { lat: -12.5, lng: 18.5 },
+  },
+  {
+    country: "Portugal",
+    id: "id-3",
+    email: "user3@example.com",
+    photoUrl: "https://via.placeholder.com/150?text=Travel+Image+3",
+    address: "Address 3, City, Portugal",
+    phoneNumber: "+123-456-7893",
+    position: { lat: 20.96, lng: 26.27 },
+  },
+];
+
 
 // ----------------------------------------------------------------------
 

@@ -1,20 +1,14 @@
-import { useMemo, useState, useCallback } from 'react';
-import { APIProvider, Map as ReactGoogleMap } from '@vis.gl/react-google-maps';
-
-import Box from '@mui/material/Box';
-
-import { CONFIG } from 'src/config-global';
-
-import { MarkerWithInfo } from './marker-with-info';
-
-// ----------------------------------------------------------------------
+import { useMemo, useState, useCallback } from "react";
+import { APIProvider, Map as ReactGoogleMap } from "@vis.gl/react-google-maps";
+import Box from "@mui/material/Box";
+import { CONFIG } from "src/config-global";
+import { MarkerWithInfo } from "./marker-with-info";
 
 export function Map({ locations, sx, ...other }) {
-  const defaultMarker = locations[0];
+  // Yeni konumu (iframe'den aldığımız lat, lng değerlerini) defaultCenter olarak ayarlıyoruz
+  const defaultCenter = useMemo(() => ({ lat: 39.91018497140684, lng: 32.806322712156096 }), []);
 
-  const [activeMarkerId, setActiveMarkerId] = useState(defaultMarker.id);
-
-  const defaultCenter = useMemo(() => defaultMarker.position, [defaultMarker.position]);
+  const [activeMarkerId, setActiveMarkerId] = useState(locations[0]?.id);
 
   const handleOpenInfo = useCallback(
     (markerId) => {
@@ -34,42 +28,31 @@ export function Map({ locations, sx, ...other }) {
       component="section"
       sx={{
         height: 480,
-        overflow: 'hidden',
-        //  Remove outline when focused
-        '& .gm-style iframe + div': {
-          border: 'none !important',
-        },
-        // Info: wrapper
-        '& .gm-style .gm-style-iw-c': {
+        overflow: "hidden",
+        // Styling haritaya özel
+        "& .gm-style iframe + div": { border: "none !important" },
+        "& .gm-style .gm-style-iw-c": {
           borderRadius: 1.5,
-          padding: '0px !important',
+          padding: "0px !important",
           boxShadow: (theme) => theme.customShadows.z8,
         },
-        // Info: content
-        '& .gm-style .gm-style-iw-d': {
-          overflow: 'unset !important',
-          maxHeight: 'unset !important',
+        "& .gm-style .gm-style-iw-d": {
+          overflow: "unset !important",
+          maxHeight: "unset !important",
         },
-        // Info: close button
-        '& .gm-style-iw-chr': {
+        "& .gm-style-iw-chr": {
           top: 4,
           right: 4,
-          position: 'absolute',
-          '& button': {
-            width: '20px !important',
-            height: '20px !important',
-            borderRadius: '50%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            display: 'flex !important',
-            padding: '4px !important',
-            bgcolor: 'black !important',
-          },
-          '& .gm-ui-hover-effect>span': {
-            bgcolor: 'white',
-            margin: '0 !important',
-            width: '100% !important',
-            height: '100% !important',
+          position: "absolute",
+          "& button": {
+            width: "20px !important",
+            height: "20px !important",
+            borderRadius: "50%",
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex !important",
+            padding: "4px !important",
+            bgcolor: "black !important",
           },
         },
         ...sx,
@@ -80,7 +63,7 @@ export function Map({ locations, sx, ...other }) {
           mapId="49ae42fed52588c3"
           minZoom={1.5}
           defaultZoom={3}
-          defaultCenter={defaultCenter}
+          defaultCenter={defaultCenter} // Bu kısımda defaultCenter'ı ayarladık
           gestureHandling="greedy"
           disableDefaultUI
           {...other}

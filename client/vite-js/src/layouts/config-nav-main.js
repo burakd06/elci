@@ -41,11 +41,7 @@ export const pageLinks = [
     link: "/company/blog",
     items: [],
   },
-  {
-    subheader: 'İnsan Kaynakları',
-    link: "/company/İnsanKaynaklari",
-    items: [],
-  },
+ 
 ];
 
 export const pageLinks2 = [

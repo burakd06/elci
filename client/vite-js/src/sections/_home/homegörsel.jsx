@@ -86,14 +86,14 @@ export function HomeGörsel({ sx, ...other }) {
     >
       <Container component={MotionViewport}>
         <Box
-          gap={3}
+          gap={1}
           display="flex"
           alignItems="center"
           flexDirection="column"
           sx={{
             px: 3,
-            pb: 10,
-            borderRadius: 3,
+            pb: 1,
+            borderRadius: 3000,
             textAlign: 'center',
             bgcolor: 'background.neutral',
           }}
@@ -108,7 +108,7 @@ export function HomeGörsel({ sx, ...other }) {
                   imagesList={imagesList} 
                   setImagesList={setImagesList}
                   css={{
-                    width: 720, borderRadius: 8, marginTop: 10
+                    width: 520, borderRadius: 8, marginTop: 10
                   }}
                 />           
           </AnimatedDiv>
