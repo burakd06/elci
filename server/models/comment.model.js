@@ -21,13 +21,32 @@ export async function fetchCommentsByProduct(product, isAdmin) {
         const whereClause = isAdmin ? { product } : { product, approved: true };
         return await prisma.comments.findMany({
             where: whereClause,
-            orderBy: { created_at: 'desc' } // Change createdAt to created_at
+            orderBy: { created_at: 'desc' }
         });
     } catch (error) {
         console.error('Ürünle ilişkili yorumları alma hatası:', error);
         throw new Error('Yorumları alırken hata oluştu.');
     }
 }
+
+export async function fetchCommentsByProductAdmin(product, isAdmin) {
+    try {
+        
+        const whereClause = isAdmin 
+            ? { product }  
+            : { product, approved: true };  
+
+        return await prisma.comments.findMany({
+            where: whereClause,
+            orderBy: { created_at: 'desc' }
+        });
+    } catch (error) {
+        console.error('Ürünle ilişkili yorumları alma hatası:', error);
+        throw new Error('Yorumları alırken hata oluştu.');
+    }
+}
+
+
 
 
 export async function addComment(username, product, comment) {

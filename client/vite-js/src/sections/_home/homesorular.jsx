@@ -8,14 +8,17 @@ import { RouterLink } from 'src/routes/components';
 import { Iconify } from 'src/components/iconify';
 import { varFade, MotionViewport } from 'src/components/animate';
 import TextEditor from 'src/components/texteditor/texteditor';
-import { getPageTexts } from 'src/api/comments/getComments';
-import ImageEditor from 'src/components/imageeditor/imageeditor';
+import {getPageTexts,getImages} from 'src/api/comments/getComments'
+
 
 export function HomeSorular({ sx, ...other }) {
   const [imagesList, setImagesList] = useState([]);
   const [animate, setAnimate] = useState(false);
   const [circularProgress, setCircularProgress] = useState(0);
   const [textDataList, setTextDataList] = useState([]);
+  const handleClick = () => {
+    navigate('/company/about');  // Yönlendirme
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -98,7 +101,7 @@ export function HomeSorular({ sx, ...other }) {
       }}
     >
       <TextEditor
-        variant="h2" css={{ my: 3 }}
+        variant="h2" css={{ my: 3, color:'black'}}
         isAdmin={decodedToken?.isAdmin}
         initialText={textDataList.find(d =>
           d.element === "Typography" &&
@@ -163,31 +166,153 @@ export function HomeSorular({ sx, ...other }) {
 
   return (
     <Box
-      component="section"
-      sx={{
-        py: { xs: 5, md: 10 },
-        ...sx,
-        background: '#f0f0f0',
-        width: '100%',  
-        backgroundPosition: 'center', 
-        backgroundSize: 'cover', 
-        
-      }}
-      {...other}
-    >
-      
-      <Container component={MotionViewport}>
-        <Grid
-          container
-          disableEqualOverflow
-          spacing={{ xs: 5, md: 3 }}
-          justifyContent={{ md: 'space-between' }}
-        >
-          <Grid xs={12} md={4} sx={{ pt: { md: 10 }, textAlign: { xs: 'center', md: 'left' } }}>
-            {renderSummary}
+    component="section"
+    sx={{
+      py: { xs: 1, md: 1 }, 
+      ...sx,
+      backgroundImage: 'url("/assets/images/ürünler/backgroundsorular.jpg")',
+      backgroundRepeat: 'repeat',
+      width: '100%',
+      backgroundPosition: 'center',
+      backgroundSize: 'auto 60%',
+    }}
+    {...other}
+  >
+    <Container component={MotionViewport}>
+      <Grid
+        container
+        disableEqualOverflow
+        spacing={{ xs: 5, md: 3 }}
+        justifyContent="center"  
+        alignItems="center"     
+      >
+        <Grid xs={12} md={4} sx={{ pt: { md: 8 }, textAlign: { xs: 'center', md: 'left' } }}>
+          {renderSummary}
+        </Grid>
+  
+       
+        <Grid container spacing={3} justifyContent="center" alignItems="center">
+          <Grid item xs={12} md={4}>
+            <Box
+              sx={{
+              width: '100%',            
+              padding: 2,
+              borderRadius: 2,
+              backgroundColor: '#f4f4f4',
+              boxShadow: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 3,
+              height: 200,
+              }}
+            >
+             
+              <Iconify
+                icon="material-symbols:keyboard"
+                width={30} 
+                sx={{ mb: 2 }} 
+              />
+              <TextEditor
+                css={{ color: 'text.secondary', mb: 5 }}
+                isAdmin={decodedToken?.isAdmin}
+                initialText={textDataList.find(d =>
+                  d.element === "Typography" &&
+                  d.id === "homebox1" &&
+                  d.path === "/"
+                )?.text}
+                textId={textDataList.find(d =>
+                  d.element === "Typography" &&
+                  d.id === "homebox1" &&
+                  d.path === "/"
+                )?.id}
+              />
+            </Box>
+          </Grid>
+  
+          <Grid item xs={12} md={4}>
+            <Box
+              sx={{
+                width: '100%',            
+                padding: 2,
+                borderRadius: 2,
+                backgroundColor: '#f4f4f4',
+                boxShadow: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                height: 200,
+              }}
+            >
+              
+              <Iconify
+                icon="streamline:local-storage-folder"
+                width={30} 
+                sx={{ mb: 2 }} 
+              />
+              <TextEditor
+                css={{ color: 'text.secondary', mb: 5 }}
+                isAdmin={decodedToken?.isAdmin}
+                initialText={textDataList.find(d =>
+                  d.element === "Typography" &&
+                  d.id === "homebox2" &&
+                  d.path === "/"
+                )?.text}
+                textId={textDataList.find(d =>  
+                  d.element === "Typography" &&
+                  d.id === "homebox2" &&
+                  d.path === "/"
+                )?.id}
+              />
+              
+            </Box>
+          </Grid>
+  
+          <Grid item xs={12} md={4}>
+            <Box
+              sx={{
+                width: '100%',            
+                padding: 2,
+                borderRadius: 2,
+                backgroundColor: '#f4f4f4',
+                boxShadow: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                height: 200,
+              }}
+            >
+              
+              <Iconify
+                icon="material-symbols:receipt-outline"
+                width={30} 
+                sx={{ mb: 2 }} 
+              />
+              <TextEditor
+                css={{ color: 'text.secondary', mb: 5 }}
+                isAdmin={decodedToken?.isAdmin}
+                initialText={textDataList.find(d =>
+                  d.element === "Typography" &&
+                  d.id === "homebox3" &&
+                  d.path === "/"
+                )?.text}
+                textId={textDataList.find(d =>
+                  d.element === "Typography" &&
+                  d.id === "homebox3" &&
+                  d.path === "/"
+                )?.id}
+              />
+            </Box>
           </Grid>
         </Grid>
-      </Container>
-    </Box>
+      </Grid>
+    </Container>
+  </Box>
+  
   );
 }

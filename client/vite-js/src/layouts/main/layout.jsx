@@ -75,7 +75,7 @@ export function MainLayout({ sx, children, header }) {
             rightArea: (
               <Box gap={{ [layoutQuery]: 1 }} display="flex" alignItems="center">
                 
-                {/* <SettingsButton /> */}
+                <SettingsButton />
               </Box>
             ),
           }}

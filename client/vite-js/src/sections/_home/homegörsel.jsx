@@ -80,89 +80,183 @@ export function HomeGörsel({ sx, ...other }) {
       sx={{
         pt: { xs: 10, md: 15 },
         pb: { xs: 5, md: 10 },
+        display: 'flex', 
+        justifyContent: 'space-between',
         ...sx,
       }}
       {...other}
     >
-      <Container component={MotionViewport}>
-        <Box
-          gap={1}
-          display="flex"
-          alignItems="center"
-          flexDirection="column"
-          sx={{
-            px: 3,
-            pb: 1,
-            borderRadius: 3000,
-            textAlign: 'center',
-            bgcolor: 'background.neutral',
+     <Container component={MotionViewport} sx={{ width: '45%' }}>
+    <Box
+      gap={1}
+      display="flex"
+      alignItems="center"
+      flexDirection="column"
+      sx={{
+        px: 3,
+        pb: 1,
+        borderRadius: 5,
+        textAlign: 'center',
+        bgcolor: 'background.neutral',
+      }}
+    >
+      <AnimatedDiv>
+        <ImageEditor  
+          isAdmin={decodedToken?.isAdmin}
+          initialImage={{
+            id: 'homesolution',
+            path: '/',
           }}
-        >
-          <AnimatedDiv>
-          <ImageEditor
-            isAdmin={decodedToken?.isAdmin}
-                  initialImage={{
-                    id: "homesolution", 
-                    path: "/", 
-                  }}
-                  imagesList={imagesList} 
-                  setImagesList={setImagesList}
-                  css={{
-                    width: 520, borderRadius: 8, marginTop: 10
-                  }}
-                />           
-          </AnimatedDiv>
-          <AnimatedDiv>
-            <TextEditor
-            css={{ color: 'text.disabled' }}
-            variant="overline"
-         isAdmin={decodedToken?.isAdmin} 
-         initialText={textDataList.find(d => 
-           d.element === "Typography" &&
-           d.id === "homeImageOverline" &&
-           d.path === "/"
-         )?.text} 
-         textId={textDataList.find(d => 
-           d.element === "Typography" &&
-           d.id === "homeImageOverline" &&
-           d.path === "/"
-         )?.id}
-         />      
-          </AnimatedDiv>
+          imagesList={imagesList}
+          setImagesList={setImagesList}
+          css={{
+            width: 520,
+            borderRadius: 8,
+            marginTop: 10,
+          }}
+        />
+      </AnimatedDiv>
+      <AnimatedDiv>
+        <TextEditor
+          css={{ color: 'text.disabled' }}
+          variant="overline"
+          isAdmin={decodedToken?.isAdmin}
+          initialText={textDataList.find(
+            (d) =>
+              d.element === 'Typography' &&
+              d.id === 'homeImageOverline' &&
+              d.path === '/',
+          )?.text}
+          textId={textDataList.find(
+            (d) =>
+              d.element === 'Typography' &&
+              d.id === 'homeImageOverline' &&
+              d.path === '/',
+          )?.id}
+        />
+      </AnimatedDiv>
 
-          <AnimatedDiv>
-            <Typography variant="h2" id="homeImageTitle">
-              <Box
-                component="span"
-                sx={(theme) => ({
-                  ...textGradient(
-                    `90deg, ${theme.vars.palette.primary.main} 20%, ${theme.vars.palette.secondary.main} 100%`
-                  ),
-                })}
-              >
-                {` Elçi Yazılım `}
-              </Box>
-            </Typography>
-          </AnimatedDiv>
+      <AnimatedDiv>
+        <Typography variant="h2" id="homeImageTitle">
+          <Box
+            component="span"
+            sx={(theme) => ({
+              ...textGradient(
+                `90deg, ${theme.vars.palette.primary.main} 20%, ${theme.vars.palette.secondary.main} 100%`,
+              ),
+            })}
+          >
+            {` Elçi `}
+          </Box>
+        </Typography>
+      </AnimatedDiv>
 
-          <AnimatedDiv>
-            <TextEditor
-            css={{ color: 'text.secondary', maxWidth: 480 }}
-         isAdmin={decodedToken?.isAdmin} 
-         initialText={textDataList.find(d => 
-           d.element === "Typography" &&
-           d.id === "homeImageDescription" &&
-           d.path === "/"
-         )?.text} 
-         textId={textDataList.find(d => 
-           d.element === "Typography" &&
-           d.id === "homeImageDescription" &&
-           d.path === "/"
-         )?.id}
-         /> 
-          </AnimatedDiv>
-        </Box>
-      </Container>
+      <AnimatedDiv>
+        <TextEditor
+          css={{ color: 'text.secondary', maxWidth: 480 }}
+          isAdmin={decodedToken?.isAdmin}
+          initialText={textDataList.find(
+            (d) =>
+              d.element === 'Typography' &&
+              d.id === 'homeImageDescription' &&
+              d.path === '/',
+          )?.text}
+          textId={textDataList.find(
+            (d) =>
+              d.element === 'Typography' &&
+              d.id === 'homeImageDescription' &&
+              d.path === '/',
+          )?.id}
+        />
+      </AnimatedDiv>
+    </Box>
+  </Container>
+  <Container component={MotionViewport} sx={{ width: '45%' }}>
+    <Box
+      gap={1}
+      display="flex"
+      alignItems="center"
+      flexDirection="column"
+      sx={{
+        px: 3,
+        pb: 1,
+        borderRadius: 5,
+        textAlign: 'center',
+        bgcolor: 'background.neutral',
+      }}
+    >
+      <AnimatedDiv>
+        <ImageEditor  
+          isAdmin={decodedToken?.isAdmin}
+          initialImage={{
+            id: 'homesolution',
+            path: '/',
+          }}
+          imagesList={imagesList}
+          setImagesList={setImagesList}
+          css={{
+            width: 520,
+            borderRadius: 8,
+            marginTop: 10,
+          }}
+        />
+      </AnimatedDiv>
+      <AnimatedDiv>
+        <TextEditor
+          css={{ color: 'text.disabled' }}
+          variant="overline"
+          isAdmin={decodedToken?.isAdmin}
+          initialText={textDataList.find(
+            (d) =>
+              d.element === 'Typography' &&
+              d.id === 'homeImageOverline1' &&
+              d.path === '/',
+          )?.text}
+          textId={textDataList.find(
+            (d) =>
+              d.element === 'Typography' &&
+              d.id === 'homeImageOverline1' &&
+              d.path === '/',
+          )?.id}
+        />
+      </AnimatedDiv>
+
+      <AnimatedDiv>
+        <Typography variant="h2" id="homeImageTitle">
+          <Box
+            component="span"
+            sx={(theme) => ({
+              ...textGradient(
+                `90deg, ${theme.vars.palette.primary.main} 20%, ${theme.vars.palette.secondary.main} 100%`,
+              ),
+            })}
+          >
+            {` Yazılım `}
+          </Box>
+        </Typography>
+      </AnimatedDiv>
+
+      <AnimatedDiv>
+        <TextEditor
+          css={{ color: 'text.secondary', maxWidth: 480 }}
+          isAdmin={decodedToken?.isAdmin}
+          initialText={textDataList.find(
+            (d) =>
+              d.element === 'Typography' &&
+              d.id === 'homeImageDescription1' &&
+              d.path === '/',
+          )?.text}
+          textId={textDataList.find(
+            (d) =>
+              d.element === 'Typography' &&
+              d.id === 'homeImageDescription1' &&
+              d.path === '/',
+          )?.id}
+        />
+        
+      </AnimatedDiv>
+    </Box>
+  </Container>
     </Box>
   );
 }

@@ -2,7 +2,8 @@
 
 import { 
     fetchAllComments as modelFetchAllComments, 
-    fetchCommentsByProduct as modelFetchCommentsByProduct, 
+    fetchCommentsByProduct as modelFetchCommentsByProduct,
+    fetchCommentsByProductAdmin as modelFetchCommentsByProductAdmin,
     addComment as modelAddComment, 
     approveComment as modelApproveComment 
 } from '../models/comment.model.js';
@@ -13,6 +14,10 @@ export async function fetchAllComments() {
 
 export async function fetchCommentsByProduct(product, isAdmin) {
     return await modelFetchCommentsByProduct(product, isAdmin);
+}
+
+export async function fetchCommentsByProductAdmin(product, isAdmin) {
+    return await modelFetchCommentsByProductAdmin(product, isAdmin);
 }
 
 export async function addComment(username, product, comment) {

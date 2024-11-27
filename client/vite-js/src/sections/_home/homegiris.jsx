@@ -13,6 +13,7 @@ import TextEditor from 'src/components/texteditor/texteditor';
 import { getPageTexts,getImages } from 'src/api/comments/getComments';
 import ImageEditor from 'src/components/imageeditor/imageeditor';
 import { useNavigate } from 'react-router-dom';
+import { height, width } from '@mui/system';
 
 function AnimatedDiv({ children }) {
   const variants = varFade({ distance: 24 }).inUp;
@@ -21,9 +22,7 @@ function AnimatedDiv({ children }) {
 
 export function HomeGiris({ sx, ...other }) {
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate('/company/about');  // Yönlendirme
-  };
+
   const [animate, setAnimate] = useState(false);
   const [imagesList, setImagesList] = useState([]);
   const [decodedToken, setDecodedToken] = useState(null)
@@ -97,7 +96,15 @@ const parseJwt = (token) => {
       <AnimatedDiv>
         <Typography variant="h1" id="homeTitle1">
             <TextEditor
-            variant="h1"
+           css={{
+            backgroundImage: 'url("/assets/images/ürünler/questionmark.jpg")', 
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            padding: '16px',
+            borderRadius: '8px',   
+            color:'black'       
+          }}
+          variant="h1"
          isAdmin={decodedToken?.isAdmin} 
          initialText={textDataList.find(d => 
            d.element === "Typography" &&
@@ -175,30 +182,13 @@ const parseJwt = (token) => {
                     width: 900,
                     height: 600,
                     borderRadius: 10,
+                    backgroundColor:'black',
                   }}
                 /> 
-               <button
-  style={{
-    padding: '10px 20px',
-    marginTop: '20px',
-    fontSize: '16px',
-    fontWeight: '400', 
-    color: 'black', 
-    backgroundColor: 'white', 
-    border: '1px solid black', 
-    borderRadius: '15px', 
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
-    display: 'inline-block',
-
-  }}
-  onClick={handleClick}
->
-  Öğrenmek İstedikleriniz
-</button>
-
     </Box>
   );
+
+
 
   return (
     <Box

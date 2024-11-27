@@ -138,16 +138,7 @@ useEffect(() => {
           <TextEditor 
         elementType="typography"
         variant="body1"
-        css={{
-          textAlign: "center",
-          align: "center",
-          fontWeight: 'bold',
-          mb: 4,
-          transform: animate ? 'translateY(0)' : 'translateY(-50px)',
-          opacity: animate ? 1 : 0,
-          transition: 'all 0.8s ease-in-out',
-          marginTop: '45pt',
-        }}
+        css={{ lineHeight: 1.8, textAlign: 'justify' }}
           isAdmin={decodedToken?.isAdmin} 
           initialText={textDataList.find(d => 
             d.element === "Typography" &&

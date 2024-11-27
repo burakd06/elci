@@ -10,7 +10,7 @@ async function extractContent(url) {
   } catch (error) {
     console.error(`Error navigating to ${url}:`, error);
     await browser.close();
-    return null; // Hata durumunda null döndür
+    return null; 
   }
 
   // İçeriği al
